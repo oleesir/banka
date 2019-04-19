@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Rubik" rel="stylesheet">
+    <title>Transaction history</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="side-column">
+        <div class="close-icon">
+            <i class="fas fa-times fa-2x close" title="close"></i>
+        </div>
+        <div class="user">
+            <p>A</p>
+        </div>
+        <div class="user-name">
+          <p>Amaka Emodi</p>
+        </div>
+        <div class="side-column-links">
+          <a href="./profile.html" ><i class="fas fa-user"></i> &nbsp;&nbsp;Profile</a>
+          <a href="./user_accounts.html" class="active"><i class="fas fa-th-list"></i> &nbsp;&nbsp;Accounts</a>
+          <a href="./transaction_history.html"><i class="fas fa-history"></i> &nbsp;&nbsp;Transactions</a>
+          <a href="./index.html"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;Logout</a>
+        </div>
+      </div>
+      <div class="main-column">
+        <header class="main-column-header">
+          <div>
+            <i class="fas fa-bars fa-2x menu" title="menu"></i>
+          </div>
+          <div class="main-column-brand">
+              <h3>BankOfOlive</h3>
+          </div>
+        </header>
+        <div class="main-column-content">
+          <div class="main-column-name">
+            <h1>Accounts</h1> 
+          </div>
+          <div class="top-input-btn">
+            <button class="btn-md btn create-btn modal-trigger" data-modal="#create-account-modal">Create account</button>
+          </div>
+
+          <!-- ACCOUNTS -->
+         
+          <table id="accounts">
+            <tr>
+              <th>Id</th>
+              <th>Type</th>
+              <th>Account Number</th>
+              <th>Account Balance</th>
+              <th>Date Created</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>current</td>
+              <td>243564867</td>
+              <td>500,000.00</td>
+              <td>26 - 3 - 17</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>savings</td>
+              <td>2345678901</td>
+              <td>50,000.00</td>
+              <td>26 - 3 - 18</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>fixed</td>
+              <td>3456789012</td>
+              <td>50,000.00</td>
+              <td>26 - 3 - 19</td>
+            </tr>
+          </table>
+        </div>
+
+      <!-- MODALS -->
+      <div id="create-account-modal" class="modal">
+          <!-- modal-content -->
+          <div class="create-account-modal-content modal-content">
+            <div class="close-span">
+              <i class="fas fa-times fa-2x close-sign" title="Close Modal"></i>
+            </div>
+            <div class="modal-form">
+              <h1>Create an account</h1>
+              <br />
+              <form>
+                <select name="" id="create-account-select" required>
+                  <option value="0">Account type</option>
+                  <option value="current">Current</option>
+                  <option value="savings">Savings</option>
+                  <option value="fixed">Fixed</option>
+                  </select>
+                <div class="btn-space">
+                  <button class="btn btn-md" id="create-account-btn">Create</button>
+                  <button class="cancel modal-close-btn">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="main-column-footer">
+          <p>Olive &copy;2019</p>
+        </div> 
+      </div>
+    </div>
+    <script src="./js/modal.js"></script>
+    <script src="./js/slide.js"></script>
+    <script src="./js/create_account.js"></script>
+  </body>
+</html>

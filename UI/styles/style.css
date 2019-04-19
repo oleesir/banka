@@ -171,6 +171,14 @@ html {
   padding: 10px;
 }
 
+.main-column-success {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .main-column-name h1 {
   font-weight: 400;
 }
