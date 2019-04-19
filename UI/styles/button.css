@@ -4,7 +4,7 @@
   cursor: pointer;
   background:#f4511e;
   border: none;
-  transition: background-color 0.8s, color 0.8s;
+  transition: background-color 0.5s, color 0.5s;
   color: #fff;
 }
 
@@ -30,7 +30,7 @@
 .btn-block {
   font-size: 18px;
   border: 2px solid #f4511e;
-  transition: border 0.8s, color 0.8s;
+  transition: border 0.5s, color 0.5s;
   border-radius: 5px;
   }
   
