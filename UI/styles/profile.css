@@ -1,4 +1,4 @@
-.main-coloumn-content {
+.main-column-content {
   margin: 20px 0px;
   padding: 20px 80px;
 }
@@ -19,13 +19,14 @@
 .details {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   width: 80%;
-  padding: 30px;
+  padding: 10px 30px;
+  height: 100%;
 }
 
 .details p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-top: 5px;
 }
 
@@ -51,26 +52,34 @@
   font-weight: 600;
 }
 
-@media (min-width: 576px) and (max-width: 767.98px) {
-.user-details {
-  display: block;
-  align-items: center;
+@media (max-width: 767.98px) {
+  .user-details {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .details {
+    margin-top: 20px;
+    width: 100%;
+    padding: 0;
   }
 }
 
 @media (max-width: 1199.98px) {
-.account-details {
-  flex-direction: column;
-}
+  .account-details {
+    flex-direction: column;
+  }
 
-.account-details .account-details-item {
-  margin-top: 20px;
+  .account-details .account-details-item {
+    margin-top: 20px;
   }
 }
 
 @media (min-width: 1200px) and (max-width: 1350px) {
-.account-details .account-details-item {
-  padding: 20px;
-  min-width: 220px;
+  .account-details .account-details-item {
+    padding: 20px;
+    min-width: 220px;
   }
 }

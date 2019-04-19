@@ -5,8 +5,11 @@
 @import url('./profile.css');
 @import url('./fa-all.css');
 @import url('./card.css');
+@import url('./modal.css');
 @import url('./table.css');
 @import url('./bank_accounts.css');
+@import url('./user_bank_account.css');
+
 
 
 * {
@@ -172,7 +175,7 @@ html {
   font-weight: 400;
 }
 
-.main-coloumn-content {
+.main-column-content {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -236,5 +239,10 @@ html {
   .main-column {
     margin-left: 0;
     min-width: 100%;
+  }
+
+
+  .main-column-content {
+    padding: 20px;
   }
 }
