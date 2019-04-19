@@ -11,7 +11,7 @@
 input[type=text],
 input[type=password],
 input[type=email],
-input[type=number] {
+input[type=number],input[type=tel] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -21,6 +21,15 @@ input[type=number] {
     margin: 10px 0px;
     color: #333;
     border-radius: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 20px;
+  font-size: 16px;
+  outline: none;
+  color: #333;
+  height: 40px;;
 }
 
 input:focus {

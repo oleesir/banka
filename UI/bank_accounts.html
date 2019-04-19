@@ -39,10 +39,10 @@
         </header>
         <div class="main-coloumn-content">
           <div class="main-column-name">
-              <h1>Active accounts</h1> 
+              <h1>Accounts</h1> 
           </div>
           <div class="top-input-btn">
-            <button class="btn-md btn create-btn">Create account</button>
+            <button class="btn-md btn create-btn modal-trigger" data-modal="#create-account-modal">Create account</button>
           </div>
           <!-- USER DETAILS -->
          
@@ -90,11 +90,46 @@
   <tr>
 </table>
  </div>
+ <!-- modal -->
+ <div id="create-account-modal" class="modal">
+   <!-- modal-content -->
+   <div class="create-account-modal-content">
+      <div class="close-span">
+          <i class="fas fa-times fa-2x close-sign"></i>
+  </div>
+  <div class="create-account-modal-form">
+      <h1>Create an account</h1>
+     <form action="">
+         <input type="text" placeholder="first name" required />
+         <input type="text" placeholder="last name" required />
+         <input type="text" placeholder="address" required />
+         <input type="text" placeholder="email" required />
+         <input type="tel" placeholder="phone number" required />
+         <select name="" id="create-account-select">
+           <option value="0">Account type</option>
+           <option value="current">Current</option>
+           <option value="savings">Savings</option>
+           <option value="fixed">Fixed</option>
+          </select>
+         <div class="btn-space">
+             <button class="btn btn-md">Create</button>
+             <button class="btn btn-md modal-close-btn">Cancel</button>
+             </div>
+    </form>
+    </div>
+   </div>
+  
+  <div>
+
+  </div>
+
+ </div>
         <div class="main-column-footer">
             <p>Olive &copy;2019</p>
         </div> 
       </div>
     </div>
+    <script src="./js/modal.js"></script>
     <script src="./js/slide.js"></script>
   </body>
 </html>
