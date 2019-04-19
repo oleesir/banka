@@ -1,0 +1,56 @@
+#customers {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+
+#customers th {
+  padding: 12px;
+  text-align: left;
+  background:#fff;
+  color:#f4511e;
+}
+
+.top-input-btn {
+  display: flex;
+  justify-content:flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.top-input-btn .create-btn {
+  width: 20%;
+  padding: 15px 0px;
+  margin-bottom: 40px;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+
+}
+
+.icon:hover {
+  color: #f4511e;
+  cursor: pointer;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+.top-input-btn .create-btn {
+  width: 100%;
+}
+}
