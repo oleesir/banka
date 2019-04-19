@@ -33,7 +33,7 @@
     font-weight: 400;
   }
 
-  .login-header {
+  .login-header, .signup-header {
       margin: 20px 0px;
   }
 
@@ -108,6 +108,7 @@
 
         header {
             width: 100%;
+            font-family: 
         }
       }
       
