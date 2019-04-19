@@ -175,6 +175,11 @@ html {
   font-weight: 400;
 }
 
+.main-column-name-with-btn {
+  display: flex;
+  justify-content: space-between;
+} 
+
 .main-column-content {
   display: flex;
   flex: 1;
@@ -203,7 +208,6 @@ html {
 }
 
 @media only screen and (max-width: 992px) {
-
   .main-column-header {
     justify-content: space-between;
   }
@@ -244,5 +248,18 @@ html {
 
   .main-column-content {
     padding: 20px;
+  }
+}
+    
+@media (max-width: 767.98px) {
+  .main-column-name-with-btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px; 
+  }
+  .main-column-btn {
+    width: 100%;
+    margin-top: 10px;
   }
 }

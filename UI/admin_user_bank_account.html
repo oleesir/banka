@@ -21,9 +21,10 @@
           <p>Staff</p>
         </div>
         <div class="side-column-links">
-          <a href="./bank_accounts.html" class="active"><i class="fas fa-th-list"></i> &nbsp;&nbsp;Accounts</a>
-          <a href="./index.html"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;Logout</a>
-        </div>
+            <a href="./admin_bank_accounts.html" class="active"><i class="fas fa-users"></i> &nbsp;&nbsp;Accounts</a>
+            <a href="./staff_accounts.html"><i class="fas fa-th-list"></i> &nbsp;&nbsp;Staff</a>
+            <a href="./index.html"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;Logout</a>
+          </div>
       </div>
       <div class="main-column">
         <header class="main-column-header">
@@ -36,12 +37,12 @@
         </header>
         <div class="main-column-content">
           <div class="return">
-              <a href="./bank_accounts.html"><i class="fas fa-arrow-left arrow"></i>&nbsp;Back</a>
+            <a href="./admin_bank_accounts.html"><i class="fas fa-arrow-left arrow"></i>&nbsp;Back</a>
           </div>
-          <div class="main-column-name main-column-name-with-btn">
+          <div class="main-column-name main-column-with-btn">
              <h1>Olisa Emodi's Account Details</h1> 
              <button class="btn-md btn create-btn main-column-btn modal-trigger" data-modal="#user-bank-account-record-modal">New transaction</button>
-            </div>
+          </div>
 
           <!-- ACCOUNT DETAILS -->
           <div class="account-details">
@@ -79,16 +80,16 @@
               <h1>Create transaction</h1>
             </div>
             <form action="#">
-                        <input type="number" placeholder="Amount" required/>
-                            <select name="" id="create-account-select">
-                                <option value="0">Type</option>
-                                <option value="debit">Debit</option>
-                                <option value="credit">Credit</option>
-                                </select>
-                                <div class="btn-space">
-                                    <button class="btn btn-md">Create</button>
-                                    <button class="cancel modal-close-btn">Cancel</button>
-                                  </div>
+              <input type="number" placeholder="Amount" required/>
+                  <select name="" id="create-account-select">
+                      <option value="0">Type</option>
+                      <option value="debit">Debit</option>
+                      <option value="credit">Credit</option>
+                      </select>
+                      <div class="btn-space">
+                          <button class="btn btn-md">Create</button>
+                          <button class="cancel modal-close-btn">Cancel</button>
+                        </div>
               </form>
               </div>
              </div>

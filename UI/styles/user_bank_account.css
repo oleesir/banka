@@ -28,33 +28,4 @@
 .return .arrow {
   color: #f4511e;
 }
-
-#user-bank-column {
-  display: flex;
-  justify-content: space-between;
-} 
-
-@media (max-width: 575.98px) {
-#user-bank-column {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 20px; 
-      }
-  .transaction-btn {
-    width: 100%;
-  }
-  }
-    
-  @media (min-width: 576px) and (max-width: 767.98px) {
-    #user-bank-column {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      padding: 20px; 
-          }
-      .transaction-btn {
-        width: 100%;
-      }
-  }
       
