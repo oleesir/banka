@@ -1,46 +1,46 @@
 .btn {
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-    background:#f4511e;
-    border: none;
-    transition: background-color 0.8s, color 0.8s;
-    color: #fff;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  background:#f4511e;
+  border: none;
+  transition: background-color 0.8s, color 0.8s;
+  color: #fff;
 }
 
 .btn-sm {
-    padding: 2px 10px;
-    font-size: 14px;
-    width: 30%;
+  padding: 2px 10px;
+  font-size: 14px;
+  width: 30%;
 }
 
 .btn-md {
-    padding: 10px 12px;
-    font: 16px;
-    width: 30%;
-    font-size: 15px;
+  padding: 10px 12px;
+  font: 16px;
+  width: 30%;
+  font-size: 15px;
 }
 
 .btn-lg {
-    padding: 14px 20px;
-    font-size: 18px; 
-    width: 80%;
+  padding: 14px 20px;
+  font-size: 18px; 
+  width: 80%;
 }
 
 .btn-block {
-    font-size: 18px;
-    border: 2px solid #f4511e;
-    transition: border 0.8s, color 0.8s;
-    border-radius: 5px;
+  font-size: 18px;
+  border: 2px solid #f4511e;
+  transition: border 0.8s, color 0.8s;
+  border-radius: 5px;
   }
   
 .btn:hover {
-    color:#fff;
-    background-color:#d84315;
+  color:#fff;
+  background-color:#d84315;
   }
   
 .btn-block:hover {
-    color:#f4511e;
-    border: 2px solid #f4511e;
+  color:#f4511e;
+  border: 2px solid #f4511e;
   }
   

@@ -8,10 +8,10 @@
     margin-bottom: 10px;
   }
   
-  input[type=text],
-  input[type=password],
-  input[type=email],
-  input[type=number] {
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -21,23 +21,23 @@
     margin: 10px 0px;
     color: #333;
     border-radius: 5px;
-  }
+}
 
-  input:focus {
+input:focus {
     outline: 0;
     opacity: 0.8;
     border-color:#f4511e;
   }
   
-  ::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: #b4babc;
-    font-size: 16px;
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #b4babc;
+  font-size: 16px;
   }
   
-  ::-moz-placeholder {
-    /* Firefox 19+ */
-    color: #b4babc;
-    font-size: 16px;
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #b4babc;
+  font-size: 16px;
   }
    
