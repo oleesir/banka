@@ -60,7 +60,7 @@
     </td>
     <td>
         <div>
-          <a href="#">Deactivate</a>
+          <a href="#" class="modal-trigger" data-modal="#deactivate-modal">Deactivate</a>
         </div>
       </td>
   </tr>
@@ -74,7 +74,7 @@
         <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
       </div>
     </td>
-    <td> <div> <a href="#">Deactivate</a></div> </td>
+    <td> <div> <a href="#" class="modal-trigger" data-modal="#deactivate-modal">Deactivate</a></div> </td>
   </tr>
   <tr>
     <td>John Doe</td>
@@ -86,7 +86,7 @@
         <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
       </div>
     </td>
-    <td> <div> <a href="#">Deactivate</a></div></td>
+    <td> <div> <a href="#" class="modal-trigger" data-modal="#deactivate-modal">Deactivate</a></div></td>
   </tr>
   <tr>
     <td>David west</td>
@@ -98,7 +98,7 @@
         <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
       </div>
     </td>
-    <td> <div> <a href="#">Deactivate</a></div> </td>
+    <td> <div> <a href="#" class="modal-trigger" data-modal="#deactivate-modal">Deactivate</a></div> </td>
   </tr>
   <tr>
     <td>Gordon brown</td>
@@ -110,7 +110,7 @@
         <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
       </div>
     </td>
-    <td> <div> <a href="#">Deactivate</a></div></td>
+    <td> <div> <a href="#" class="modal-trigger" data-modal="#deactivate-modal">Deactivate</a></div></td>
   </tr>
   <tr>
     <td>Chulo Green</td>
@@ -122,7 +122,7 @@
         <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
       </div>
     </td>
-    <td> <div> <a href="#">Activate</a></div></td>
+    <td> <div> <a href="#" class="modal-trigger" data-modal="#activate-modal">Activate</a></div></td>
   </tr>
   <tr>
     <td>Favour Tor</td>
@@ -134,7 +134,7 @@
         <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
       </div>
     </td>
-    <td><div><a href="#">Deactivate</a></div></td>
+    <td><div><a href="#" class="modal-trigger" data-modal="#deactivate-modal">Deactivate</a></div></td>
   </tr>
   <tr>
 </table>
@@ -180,6 +180,45 @@
       </div>
      </div>
  </div>
+
+  <!-- deactivate modal -->
+  <div id="deactivate-modal" class="modal">
+      <div class="deactivate-modal-content modal-content">
+          <div class="close-span">
+              <i class="fas fa-times fa-2x close-sign"></i>
+      </div>
+      <div class="modal-form">
+         <div class="content-header">
+            <h1>Deactivate account</h1>
+         </div> 
+          <p>Are you sure you want to deactivate this account ?</p>
+          <div class="btn-space">
+              <button class="btn btn-md">Yes</button>
+              <button class="cancel modal-close-btn">No</button>
+                 </div>
+        </div>
+       </div>
+   </div>
+
+     <!-- activate modal -->
+  <div id="activate-modal" class="modal">
+      <div class="activate-modal-content modal-content">
+          <div class="close-span">
+              <i class="fas fa-times fa-2x close-sign"></i>
+      </div>
+      <div class="modal-form">
+         <div class="content-header">
+            <h1>Activate account</h1>
+         </div> 
+          <p>Are you sure you want to activate this account ?</p>
+          <div class="btn-space">
+              <button class="btn btn-md">Yes</button>
+              <button class="cancel modal-close-btn">No</button>
+                 </div>
+        </div>
+       </div>
+   </div>
+
  <div class="main-column-footer">
             <p>Olive &copy;2019</p>
         </div> 
