@@ -1,0 +1,43 @@
+.from-content {
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.form-btn {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=number] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    border-width:1px;
+    border-color:none;
+    margin: 10px 0px;
+    color: #333;
+    border-radius: 5px;
+  }
+
+  input:focus {
+    outline: 0;
+    opacity: 0.8;
+    border-color:#f4511e;
+  }
+  
+  ::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #b4babc;
+    font-size: 16px;
+  }
+  
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #b4babc;
+    font-size: 16px;
+  }
+   
