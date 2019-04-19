@@ -21,12 +21,10 @@
           <p>Amaka Emodi</p>
         </div>
         <div class="side-column-links">
-          <a href="./profile.html" class="active"> <i class="fas fa-user"></i> &nbsp; &nbsp;Profile</a>
-          <a href="./bank_accounts.html"> <i class="fas fa-th-list">&nbsp;&nbsp;</i>Accounts</a>
-          <a href="./index.html"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a>
-          <a href="#">Link 3</a>
-          <a href="#">Link 4</a>
-        </div>
+          <a href="./profile.html" class="active"><i class="fas fa-user"></i> &nbsp; &nbsp;Profile</a>
+          <a href="./transaction_history.html"><i class="fas fa-history"></i> &nbsp;&nbsp;Transactions</a>
+          <a href="./index.html"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;Logout</a>
+         </div>
       </div>
       <div class="main-column">
         <header class="main-column-header">
@@ -39,7 +37,10 @@
         </header>
         <div class="main-coloumn-content">
           <div class="main-column-name">
-              <h1>Profile</h1> 
+            <h1>Profile</h1> 
+          </div>
+          <div class="top-input-btn">
+            <button class="btn-md btn create-btn modal-trigger" data-modal="#create-account-modal">Create account</button>
           </div>
 
           <!-- USER DETAILS -->
@@ -70,6 +71,32 @@
             <div class="card account-details-item acct-type">
               <p class="account-details-item-heading">Account Type</p>
               <p>Current account</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODALS -->
+        <div id="create-account-modal" class="modal">
+          <!-- modal-content -->
+          <div class="create-account-modal-content modal-content">
+            <div class="close-span">
+              <i class="fas fa-times fa-2x close-sign"></i>
+            </div>
+            <div class="modal-form">
+              <h1>Create an account</h1>
+              <br />
+              <form action="#">
+                <select name="" id="create-account-select">
+                  <option value="0">Account type</option>
+                  <option value="current">Current</option>
+                  <option value="savings">Savings</option>
+                  <option value="fixed">Fixed</option>
+                  </select>
+                <div class="btn-space">
+                  <button class="btn btn-md">Create</button>
+                  <button class="cancel modal-close-btn">Cancel</button>
+                </div>
+             </form>
             </div>
           </div>
         </div>

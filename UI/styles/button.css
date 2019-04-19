@@ -16,7 +16,7 @@
 
 .btn-md {
   padding: 10px 12px;
-  font: 16px;
+  font-size: 16px;
   width: 30%;
   font-size: 15px;
 }
@@ -48,6 +48,7 @@
   padding: 10px 12px;
   font: 16px;
   width: 30%;
+  background: #fff;
   font-size: 15px;
   color: #f4511e;
   border: #f4511e 1px solid;

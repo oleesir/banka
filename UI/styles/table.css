@@ -1,31 +1,35 @@
-#customers {
+table {
   border-collapse: collapse;
   width: 100%;
 }
 
-#customers td, #customers th {
+table td, table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#customers tr:nth-child(even) {
+table tr:nth-child(even) {
   background: #f2f2f2;
 }
 
-#customers tr:hover {
+table tr:hover {
   background-color: #ddd;
 }
 
-#customers th {
+table th {
   padding: 12px;
   text-align: left;
   background:#fff;
   color:#f4511e;
 }
 
+table#transactions {
+  margin-top: 40px;
+}
+
 .top-input-btn {
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
 }
@@ -49,9 +53,7 @@
   cursor: pointer;
 }
 
-.create-account-modal-content, 
-.delete-account-modal-content,
-.specific-record-modal-content {
+.modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -60,39 +62,31 @@
   border-radius: 5px;
 }
 
-.create-account-modal-content .close-span, 
-.delete-account-modal-content .close-span,
-.specific-record-modal-content .close-span {
+.modal-content .close-span {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.create-account-modal-content .close-span :hover {
+.modal-content .close-span :hover {
   cursor: pointer;
   }
 
-.create-account-modal-form,
-.delete-account-modal-form,
-.specific-record-modal-form {
+.modal-form {
   width: 100%;
   align-items: center;
   padding: 0 60px;
 }
 
-.delete-account-modal-form p {
-  text-align: center;
-}
-
-.create-account-modal-form h1 {
+.modal-form h1 {
   text-align: center;
 } 
 
-.specific-record-modal-form span {
+.modal-form span {
   font-weight: 900;
 }
 
-.specific-record-modal-form p {
+.modal-form p {
   margin-top: 10px;
 }
 
@@ -106,7 +100,12 @@
   .modal-content {
     width: 100%;
   }
-  }
+
+  .top-input-btn .create-btn {
+    width: 100%;
+    font-size: 18px;
+  }  
+}
 
 @media (min-width: 576px) and (max-width: 767.98px) {
   .modal-content {
@@ -114,9 +113,10 @@
     padding: 30px;
   }
 
-.top-input-btn .create-btn {
-  width: 100%;
-}
+  .top-input-btn .create-btn {
+    width: 100%;
+    font-size: 18px;
+  }
 }
         
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -124,18 +124,18 @@
     width: 60%;
     padding: 40px;
   }
-  }
+}
       
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .modal-content {
       width: 60%;
       padding: 50px;
   }
-  }
+}
   
-  @media (min-width: 1200px) {
-    .modal-content {
-      width: 40%;
-      padding: 50px;
-    }
+@media (min-width: 1200px) {
+  .modal-content {
+    width: 40%;
+    padding: 50px;
   }
+}

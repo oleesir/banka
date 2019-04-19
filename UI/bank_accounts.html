@@ -18,14 +18,11 @@
             <p>A</p>
         </div>
         <div class="user-name">
-          <p>Amaka Emodi</p>
+          <p>Staff</p>
         </div>
         <div class="side-column-links">
-          <a href="./profile.html" > <i class="fas fa-user"></i>&nbsp;&nbsp;Profile</a>
-          <a href="./bank_accounts.html" class="active"> <i class="fas fa-th-list"></i>&nbsp;&nbsp;Accounts</a>
-          <a href="./index.html"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a>
-          <a href="#">Link 3</a>
-          <a href="#">Link 4</a>
+          <a href="./bank_accounts.html" class="active"><i class="fas fa-th-list"></i> &nbsp;&nbsp;Accounts</a>
+          <a href="./index.html"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;Logout</a>
         </div>
       </div>
       <div class="main-column">
@@ -41,112 +38,131 @@
           <div class="main-column-name">
               <h1>Accounts</h1> 
           </div>
-          <div class="top-input-btn">
-            <button class="btn-md btn create-btn modal-trigger" data-modal="#create-account-modal">Create account</button>
-          </div>
-          <!-- USER DETAILS -->
+          <!-- BANK ACCOUNTS -->
          
 <table id="customers">
   <tr>
     <th>Account name</th>
     <th>Account number</th>
+    <th>Status</th>
     <th>Actions</th>
+    <th>Change status</th>
   </tr>
   <tr>
     <td>Amaka Emodi</td>
     <td>3847526981</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal" ></i><i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i></div></td>
+    <td>Active</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td>
+        <div>
+          <a href="#">Deactivate</a>
+        </div>
+      </td>
   </tr>
   <tr>
     <td>Chike Ibuzo</td>
     <td>8864527021</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td>Active</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td> <div> <a href="#">Deactivate</a></div> </td>
   </tr>
   <tr>
     <td>John Doe</td>
     <td>4453098756</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td>Active</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td> <div> <a href="#">Deactivate</a></div></td>
   </tr>
   <tr>
     <td>David west</td>
     <td>3327912375</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td>Active</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td> <div> <a href="#">Deactivate</a></div> </td>
   </tr>
   <tr>
     <td>Gordon brown</td>
     <td>9904573218</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td>Active</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td> <div> <a href="#">Deactivate</a></div></td>
   </tr>
   <tr>
     <td>Chulo Green</td>
     <td>7584930218</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td>Dormant</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td> <div> <a href="#">Activate</a></div></td>
   </tr>
   <tr>
     <td>Favour Tor</td>
     <td>9000032456</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td>Active</td>
+    <td>
+      <div class="icons">
+        <i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i>
+        <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
+      </div>
+    </td>
+    <td><div><a href="#">Deactivate</a></div></td>
   </tr>
   <tr>
 </table>
  </div>
- <!-- modal -->
- <div id="create-account-modal" class="modal">
-   <!-- modal-content -->
-   <div class="create-account-modal-content modal-content">
-      <div class="close-span">
-          <i class="fas fa-times fa-2x close-sign"></i>
-  </div>
-  <div class="create-account-modal-form">
-      <h1>Create an account</h1>
-     <form action="#">
-         <input type="text" placeholder="first name" required />
-         <input type="text" placeholder="last name" required />
-         <input type="text" placeholder="address" required />
-         <input type="text" placeholder="email" required />
-         <input type="tel" placeholder="phone number" required />
-         <select name="" id="create-account-select">
-           <option value="0">Account type</option>
-           <option value="current">Current</option>
-           <option value="savings">Savings</option>
-           <option value="fixed">Fixed</option>
-          </select>
-         <div class="btn-space">
-             <button class="btn btn-md">Create</button>
-             <button class="cancel modal-close-btn">Cancel</button>
-             </div>
-    </form>
-    </div>
-   </div>
-  
-  <div>
 
-  </div>
-
- </div>
-
- <div id="delete-account-modal" class="modal">
+ <!-- delete modal -->
+<div id="delete-account-modal" class="modal">
     <div class="delete-account-modal-content modal-content">
         <div class="close-span">
             <i class="fas fa-times fa-2x close-sign"></i>
     </div>
-    <div class="delete-account-modal-form">
+    <div class="modal-form">
         <p>Are you sure you want to delete account ?</p>
         <div class="btn-space">
                <button class="btn btn-md">Delete</button>
                <button class="cancel modal-close-btn">Cancel</button>
                </div>
-      </form>
       </div>
      </div>
  </div>
 
+ <!-- view record modal -->
  <div id="specific-record-modal" class="modal">
     <div class="specific-record-modal-content modal-content">
         <div class="close-span">
             <i class="fas fa-times fa-2x close-sign"></i>
     </div>
-    <div class="specific-record-modal-form">
+    <div class="modal-form">
        <div class="content-header">
           <h1>Account details</h1>
        </div> 
@@ -161,11 +177,10 @@
         <div class="btn-center">
                <button class="btn btn-md modal-close-btn">Back</button>
                </div>
-      </form>
       </div>
      </div>
  </div>
-        <div class="main-column-footer">
+ <div class="main-column-footer">
             <p>Olive &copy;2019</p>
         </div> 
       </div>
