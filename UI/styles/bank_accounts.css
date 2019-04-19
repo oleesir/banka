@@ -49,7 +49,9 @@
   cursor: pointer;
 }
 
-.create-account-modal-content, .delete-account-modal-content {
+.create-account-modal-content, 
+.delete-account-modal-content,
+.specific-record-modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -59,7 +61,8 @@
 }
 
 .create-account-modal-content .close-span, 
-.delete-account-modal-content .close-span {
+.delete-account-modal-content .close-span,
+.specific-record-modal-content .close-span {
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -70,7 +73,8 @@
   }
 
 .create-account-modal-form,
-.delete-account-modal-form {
+.delete-account-modal-form,
+.specific-record-modal-form {
   width: 100%;
   align-items: center;
   padding: 0 60px;
@@ -84,23 +88,28 @@
   text-align: center;
 } 
 
-.btn-space {
-  margin-top: 30px;
-  width: 100%;
+.specific-record-modal-form span {
+  font-weight: 900;
+}
+
+.specific-record-modal-form p {
+  margin-top: 10px;
+}
+
+.content-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  width: 100%;
 }
 
 @media (max-width: 575.98px) {
-  .create-account-modal-content,
-  .delete-account-modal-content {
+  .modal-content {
     width: 100%;
   }
   }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .create-account-modal-content,
-  .delete-account-modal-content {
+  .modal-content {
     width: 70%;
     padding: 30px;
   }
@@ -111,24 +120,21 @@
 }
         
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .create-account-modal-content,
-  .delete-account-modal-content {
+  .modal-content {
     width: 60%;
     padding: 40px;
   }
   }
       
 @media (min-width: 992px) and (max-width: 1199.98px) {
-  .create-account-modal-content,
-  .delete-account-modal-content {
+  .modal-content {
       width: 60%;
       padding: 50px;
   }
   }
   
   @media (min-width: 1200px) {
-    .create-account-modal-content,
-    .delete-account-modal-content {
+    .modal-content {
       width: 40%;
       padding: 50px;
     }
