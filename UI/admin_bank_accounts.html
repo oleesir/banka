@@ -18,10 +18,11 @@
             <p>A</p>
         </div>
         <div class="user-name">
-          <p>Staff</p>
+          <p>Admin</p>
         </div>
         <div class="side-column-links">
-          <a href="./bank_accounts.html" class="active"><i class="fas fa-th-list"></i> &nbsp;&nbsp;Accounts</a>
+          <a href="./admin_bank_accounts.html" class="active"><i class="fas fa-users"></i> &nbsp;&nbsp;Accounts</a>
+          <a href="./staff_accounts.html"><i class="fas fa-th-list"></i> &nbsp;&nbsp;Staff</a>
           <a href="./index.html"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;Logout</a>
         </div>
       </div>
@@ -31,7 +32,7 @@
             <i class="fas fa-bars fa-2x menu"></i>
           </div>
           <div class="main-column-brand">
-              <h3>BankOfOlive</h3>
+            <h3>BankOfOlive</h3>
           </div>
         </header>
         <div class="main-column-content">
@@ -39,7 +40,6 @@
               <h1>Accounts</h1> 
           </div>
           <!-- BANK ACCOUNTS -->
-         
           <table id="customers">
             <tr>
               <th>Account name</th>
@@ -54,7 +54,7 @@
               <td>Active</td>
               <td>
                 <div class="icons">
-                  <a href="./user_bank_account.html"><i class="fas fa-eye icon"></i></a>
+                  <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -70,7 +70,7 @@
               <td>Active</td>
               <td>
                 <div class="icons">
-                <a href="./user_bank_account.html"><i class="fas fa-eye icon"></i></a>
+                <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -82,7 +82,7 @@
               <td>Active</td>
               <td>
                 <div class="icons">
-                  <a href="./user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
+                  <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -94,7 +94,7 @@
               <td>Active</td>
               <td>
                 <div class="icons">
-                  <a href="./user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
+                  <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -106,7 +106,7 @@
               <td>Active</td>
               <td>
                 <div class="icons">
-                  <a href="./user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
+                  <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -118,7 +118,7 @@
               <td>Dormant</td>
               <td>
                 <div class="icons">
-                  <a href="./user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
+                  <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -130,7 +130,7 @@
               <td>Active</td>
               <td>
                 <div class="icons">
-                  <a href="./user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
+                  <a href="./admin_user_bank_account.html"><i class="fas fa-eye icon modal-trigger" data-modal="#specific-record-modal"></i></a>
                   <i class="fas fa-trash-alt icon modal-trigger" data-modal="#delete-account-modal"></i>
                 </div>
               </td>
@@ -140,8 +140,8 @@
           </table>
         </div>
 
-        <!-- delete modal -->
-        <div id="delete-account-modal" class="modal">
+          <!-- delete modal -->
+          <div id="delete-account-modal" class="modal">
             <div class="delete-account-modal-content modal-content">
                 <div class="close-span">
                     <i class="fas fa-times fa-2x close-sign"></i>
@@ -154,46 +154,46 @@
                       </div>
               </div>
             </div>
-        </div>
-        <!-- deactivate modal -->
-        <div id="deactivate-modal" class="modal">
+          </div>
+          <!-- deactivate modal -->
+          <div id="deactivate-modal" class="modal">
             <div class="deactivate-modal-content modal-content">
                 <div class="close-span">
-                    <i class="fas fa-times fa-2x close-sign"></i>
-            </div>
-            <div class="modal-form">
-              <div class="content-header">
+                  <i class="fas fa-times fa-2x close-sign"></i>
+                </div>
+                <div class="modal-form">
+                  <div class="content-header">
                   <h1>Deactivate account</h1>
-              </div> 
+                </div> 
                 <p>Are you sure you want to deactivate this account ?</p>
                 <div class="btn-space">
-                    <button class="btn btn-md">Yes</button>
-                    <button class="cancel modal-close-btn">No</button>
-                      </div>
+                  <button class="btn btn-md">Yes</button>
+                  <button class="cancel modal-close-btn">No</button>
+                </div>
               </div>
             </div>
-        </div>
-        <!-- activate modal -->
-        <div id="activate-modal" class="modal">
+          </div>
+          <!-- activate modal -->
+          <div id="activate-modal" class="modal">
             <div class="activate-modal-content modal-content">
-                <div class="close-span">
-                    <i class="fas fa-times fa-2x close-sign"></i>
-            </div>
-            <div class="modal-form">
-              <div class="content-header">
-                  <h1>Activate account</h1>
-              </div> 
+              <div class="close-span">
+                <i class="fas fa-times fa-2x close-sign"></i>
+              </div>
+              <div class="modal-form">
+                <div class="content-header">
+                    <h1>Activate account</h1>
+                </div> 
                 <p>Are you sure you want to activate this account ?</p>
                 <div class="btn-space">
-                    <button class="btn btn-md">Yes</button>
-                    <button class="cancel modal-close-btn">No</button>
-                      </div>
+                  <button class="btn btn-md">Yes</button>
+                  <button class="cancel modal-close-btn">No</button>
+                </div>
               </div>
             </div>
-        </div>
+          </div>
 
         <div class="main-column-footer">
-            <p>Olive &copy;2019</p>
+          <p>Olive &copy;2019</p>
         </div> 
       </div>
     </div>
