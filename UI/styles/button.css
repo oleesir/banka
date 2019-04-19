@@ -60,4 +60,19 @@
   color:#fff;
   background: #f4511e;
 }
+
+.btn-space {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-center {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
   
