@@ -43,4 +43,21 @@
   color:#f4511e;
   border: 2px solid #f4511e;
   }
+
+.cancel {
+  padding: 10px 12px;
+  font: 16px;
+  width: 30%;
+  font-size: 15px;
+  color: #f4511e;
+  border: #f4511e 1px solid;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.cancel:hover {
+  color:#fff;
+  background: #f4511e;
+}
   
