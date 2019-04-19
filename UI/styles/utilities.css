@@ -1,0 +1,22 @@
+a {
+    text-decoration: none;
+    color:#f4511e;
+    transition: text-decoration 0.8s;
+  }
+  
+  a:hover,
+  a:focus,
+  a:active {
+    text-decoration: underline; 
+  }
+  
+  a.btn:hover,
+  a.btn:focus,
+  a.btn:active {
+    text-decoration: none;
+  }
+  
+  p {
+    color: #333;
+   }
+   
