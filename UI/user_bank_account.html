@@ -12,7 +12,7 @@
     <div class="wrapper">
       <div class="side-column">
         <div class="close-icon">
-            <i class="fas fa-times fa-2x close"></i>
+            <i class="fas fa-times fa-2x close" title="close"></i>
         </div>
         <div class="user">
             <p>A</p>
@@ -28,7 +28,7 @@
       <div class="main-column">
         <header class="main-column-header">
           <div>
-            <i class="fas fa-bars fa-2x menu"></i>
+            <i class="fas fa-bars fa-2x menu" title="menu"></i>
           </div>
           <div class="main-column-brand">
               <h3>BankOfOlive</h3>
@@ -73,14 +73,16 @@
         <div id="user-bank-account-record-modal" class="modal">
             <div class="user-bank-account-record-modal-content modal-content">
                 <div class="close-span">
-                    <i class="fas fa-times fa-2x close-sign"></i>
+                    <i class="fas fa-times fa-2x close-sign" title="Close Modal"></i>
             </div>
             <div class="modal-form">
               <h1>Create transaction</h1>
             </div>
             <form action="#">
+                <input type="text" placeholder="Amaka Emodi" required disabled/>
+                <input type="number" placeholder="1234567890" required disabled/>
                         <input type="number" placeholder="Amount" required/>
-                            <select name="" id="create-account-select">
+                            <select name="" id="create-account-select" required>
                                 <option value="0">Type</option>
                                 <option value="debit">Debit</option>
                                 <option value="credit">Credit</option>

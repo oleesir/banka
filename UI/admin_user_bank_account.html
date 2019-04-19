@@ -12,7 +12,7 @@
     <div class="wrapper">
       <div class="side-column">
         <div class="close-icon">
-            <i class="fas fa-times fa-2x close"></i>
+            <i class="fas fa-times fa-2x close" title="close"></i>
         </div>
         <div class="user">
             <p>A</p>
@@ -29,7 +29,7 @@
       <div class="main-column">
         <header class="main-column-header">
           <div>
-            <i class="fas fa-bars fa-2x menu"></i>
+            <i class="fas fa-bars fa-2x menu" title="menu"></i>
           </div>
           <div class="main-column-brand">
               <h3>BankOfOlive</h3>
@@ -41,7 +41,6 @@
           </div>
           <div class="main-column-name main-column-with-btn">
              <h1>Olisa Emodi's Account Details</h1> 
-             <button class="btn-md btn create-btn main-column-btn modal-trigger" data-modal="#user-bank-account-record-modal">New transaction</button>
           </div>
 
           <!-- ACCOUNT DETAILS -->
@@ -69,30 +68,7 @@
             <p> <span>Opened on:</span> &nbsp;&nbsp;1-1-2019 2:25pm</p>
             <p> <span>Address:</span> &nbsp;&nbsp;Number 31 townsend road</p>
           </div>
-        
-
-        <div id="user-bank-account-record-modal" class="modal">
-            <div class="user-bank-account-record-modal-content modal-content">
-                <div class="close-span">
-                    <i class="fas fa-times fa-2x close-sign"></i>
-            </div>
-            <div class="modal-form">
-              <h1>Create transaction</h1>
-            </div>
-            <form action="#">
-              <input type="number" placeholder="Amount" required/>
-                  <select name="" id="create-account-select">
-                      <option value="0">Type</option>
-                      <option value="debit">Debit</option>
-                      <option value="credit">Credit</option>
-                      </select>
-                      <div class="btn-space">
-                          <button class="btn btn-md">Create</button>
-                          <button class="cancel modal-close-btn">Cancel</button>
-                        </div>
-              </form>
-              </div>
-             </div>
+      
          </div>
  
  <div class="main-column-footer">
