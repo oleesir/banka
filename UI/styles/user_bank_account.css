@@ -1,0 +1,60 @@
+.account-info {
+  padding: 50px;
+  background: #fff;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.account-info span:first-child {
+  font-weight: 900;
+}
+
+.account-info p {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+.return {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.return a {
+  font-size: 20px;
+}
+
+.return .arrow {
+  color: #f4511e;
+}
+
+#user-bank-column {
+  display: flex;
+  justify-content: space-between;
+} 
+
+@media (max-width: 575.98px) {
+#user-bank-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px; 
+      }
+  .transaction-btn {
+    width: 100%;
+  }
+  }
+    
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    #user-bank-column {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 20px; 
+          }
+      .transaction-btn {
+        width: 100%;
+      }
+  }
+      

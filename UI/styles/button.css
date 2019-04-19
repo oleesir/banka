@@ -46,7 +46,6 @@
 
 .cancel {
   padding: 10px 12px;
-  font: 16px;
   width: 30%;
   background: #fff;
   font-size: 15px;
@@ -75,5 +74,18 @@
   display: flex;
   justify-content:center;
   align-items: center;
+}
+
+.top-input-btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.top-input-btn .create-btn {
+  width: 20%;
+  padding: 15px 0;
+  margin-bottom: 40px;
 }
   

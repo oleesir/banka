@@ -27,19 +27,6 @@ table#transactions {
   margin-top: 40px;
 }
 
-.top-input-btn {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-}
-
-.top-input-btn .create-btn {
-  width: 20%;
-  padding: 15px 0px;
-  margin-bottom: 40px;
-}
-
 .icons {
   display: flex;
   justify-content: space-around;
@@ -53,43 +40,6 @@ table#transactions {
   cursor: pointer;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40%;
-  border-radius: 5px;
-}
-
-.modal-content .close-span {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.modal-content .close-span :hover {
-  cursor: pointer;
-  }
-
-.modal-form {
-  width: 100%;
-  align-items: center;
-  padding: 0 60px;
-}
-
-.modal-form h1 {
-  text-align: center;
-} 
-
-.modal-form span {
-  font-weight: 900;
-}
-
-.modal-form p {
-  margin-top: 10px;
-}
-
 .content-header {
   display: flex;
   justify-content: center;
@@ -97,10 +47,6 @@ table#transactions {
 }
 
 @media (max-width: 575.98px) {
-  .modal-content {
-    width: 100%;
-  }
-
   .top-input-btn .create-btn {
     width: 100%;
     font-size: 18px;
@@ -108,34 +54,15 @@ table#transactions {
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .modal-content {
-    width: 70%;
-    padding: 30px;
-  }
-
   .top-input-btn .create-btn {
     width: 100%;
     font-size: 18px;
   }
 }
-        
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .modal-content {
-    width: 60%;
-    padding: 40px;
-  }
-}
-      
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .modal-content {
-      width: 60%;
-      padding: 50px;
-  }
-}
-  
-@media (min-width: 1200px) {
-  .modal-content {
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .top-input-btn .create-btn {
     width: 40%;
-    padding: 50px;
+    font-size: 18px;
   }
 }
