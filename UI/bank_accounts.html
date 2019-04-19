@@ -55,7 +55,7 @@
   <tr>
     <td>Amaka Emodi</td>
     <td>3847526981</td>
-    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon"></i></div></td>
+    <td><div class="icons" ><i class="far fa-edit icon">&nbsp;</i><i class="fas fa-eye icon"></i><i class="fas fa-trash-alt fa-sm icon modal-trigger" data-modal="#delete-account-modal"></i></div></td>
   </tr>
   <tr>
     <td>Chike Ibuzo</td>
@@ -113,7 +113,7 @@
           </select>
          <div class="btn-space">
              <button class="btn btn-md">Create</button>
-             <button class="btn btn-md modal-close-btn">Cancel</button>
+             <button class="cancel modal-close-btn">Cancel</button>
              </div>
     </form>
     </div>
@@ -123,6 +123,22 @@
 
   </div>
 
+ </div>
+
+ <div id="delete-account-modal" class="modal">
+    <div class="delete-account-modal-content">
+        <div class="close-span">
+            <i class="fas fa-times fa-2x close-sign"></i>
+    </div>
+    <div class="delete-account-modal-form">
+        <p>Are you sure you want to delete account ?</p>
+        <div class="btn-space">
+               <button class="btn btn-md">Delete</button>
+               <button class="cancel modal-close-btn">Cancel</button>
+               </div>
+      </form>
+      </div>
+     </div>
  </div>
         <div class="main-column-footer">
             <p>Olive &copy;2019</p>
