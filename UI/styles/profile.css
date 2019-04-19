@@ -1,0 +1,76 @@
+.main-coloumn-content {
+  margin: 20px 0px;
+  padding: 20px 80px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: row;
+  padding: 30px;
+  width: 100%;
+}
+
+.pic {
+  width: 200px;
+  height: 200px;
+  background: purple;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  padding: 30px;
+}
+
+.details p {
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.account-details {
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.account-details-item {
+  padding: 30px 20px;
+  font-size: 25px;
+  min-width: 300px;
+}
+
+.account-details-item-heading {
+  font-size: 15px;
+}
+
+.user-details .details span {
+  font-weight: 600;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+.user-details {
+  display: block;
+  align-items: center;
+  }
+}
+
+@media (max-width: 1199.98px) {
+.account-details {
+  flex-direction: column;
+}
+
+.account-details .account-details-item {
+  margin-top: 20px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1350px) {
+.account-details .account-details-item {
+  padding: 20px;
+  min-width: 220px;
+  }
+}

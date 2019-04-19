@@ -1,22 +1,35 @@
 a {
-    text-decoration: none;
-    color:#f4511e;
-    transition: text-decoration 0.8s;
+  text-decoration: none;
+  color:#f4511e;
+  transition: text-decoration 0.8s;
+}
+
+a:hover,
+a:focus,
+a:active {
+  text-decoration: underline; 
+}
+
+a.btn:hover,
+a.btn:focus,
+a.btn:active {
+  text-decoration: none;
+}
+
+p {
+  color: #333;
+}
+
+@media (max-width: 575.98px) {
+  .auth-content {
+    width: 100%;
+    padding: 20px;
   }
-  
-  a:hover,
-  a:focus,
-  a:active {
-    text-decoration: underline; 
-  }
-  
-  a.btn:hover,
-  a.btn:focus,
-  a.btn:active {
-    text-decoration: none;
-  }
-  
-  p {
-    color: #333;
-   }
-   
+.auth-container .auth-content {
+    border-radius: 0;
+    }
+header {
+    width: 100%;
+}
+}
+      

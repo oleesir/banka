@@ -6,18 +6,18 @@
      box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.05);
    }
 
-   header {
-       width: 40%;
-       display: flex;
-       justify-content: center;
-       padding: 40px;
-   }
+header {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
 
-   header .brand {
-       font-size: 40px;
-       color: #fff;
-       font-family: 'Rubik', sans-serif;
-   }
+header .brand {
+    font-size: 40px;
+    color: #fff;
+    font-family: 'Rubik', sans-serif;
+}
 
  .auth-content {
      text-align: center; 
@@ -33,97 +33,99 @@
     font-weight: 400;
   }
 
-  .login-header, .signup-header {
-      margin: 20px 0px;
-  }
+.login-header, .signup-header {
+    margin: 20px 0px;
+}
 
-  .signup {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-  }
+.signup {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
 
-  .signup a {
-      text-decoration: none;
-  }
+.signup a {
+    text-decoration: none;
+}
 
-  .login-bottom {
-      margin: 20px 0px;
-  }
+.login-bottom {
+    margin: 20px 0px;
+}
 
-  .auth-container .footer p {
-      color: #fff;
-  }
+.auth-container .footer p {
+    color: #fff;
+}
 
-  @media (max-width: 575.98px) {
-    .auth-content {
-          width: 100%;
-          padding: 20px;
-      }
-    .auth-container .auth-content {
-          border-radius: 0;
-        }
-        header {
-            width: 100%;
-        }
-      }
-      
-    @media (min-width: 576px) and (max-width: 767.98px) {
-    .auth-content {
-          width: 80%;
-          padding: 30px;
-      }
-      .auth-container .auth-content {
-          border-radius: 0;
-        }
-
-        header {
-            width: 100%;
-        }
+@media (max-width: 575.98px) {
+.auth-content {
+    width: 100%;
+    padding: 20px;
     }
-      
-    @media (min-width: 768px) and (max-width: 991.98px) {
-      .auth-content {
-          width: 60%;
-          padding: 40px;
-        }
-      .auth-container .auth-content {
-          border-radius: 3px;
-        }
+.auth-container .auth-content {
+    border-radius: 0;
+}
+header {
+   width: 100%;
+}
+}
+  
+@media (min-width: 576px) and (max-width: 767.98px) {
+.auth-content {
+    width: 80%;
+    padding: 30px;
+  }
 
-        header {
-            width: 100%;
-        }
-    }
-      
-    @media (min-width: 992px) and (max-width: 1199.98px) {
-      .auth-content {
-          width: 60%;
-          padding: 50px;
-      }
-      
-      .auth-container .auth-content {
-        border-radius: 3px;
-      }
+.auth-container .auth-content {
+    border-radius: 0;
+  }
 
-        header {
-            width: 100%;
-            font-family: 
-        }
-      }
-      
-    @media (min-width: 1200px) {
-      .auth-content {
-          width: 40%;
-          padding: 50px;
-        }
+  header {
+    width: 100%;
+  }
+}
+    
+@media (min-width: 768px) and (max-width: 991.98px) {
+.auth-content {
+    width: 60%;
+    padding: 40px;
+  }
 
-      .auth-container .auth-content {
-          border-radius: 3px;
-        }
+.auth-container .auth-content {
+    border-radius: 3px;
 
-        header {
-            width: 100%;
-        }
-      }
-         
+  }
+
+header {
+    width: 100%;
+}
+}
+    
+@media (min-width: 992px) and (max-width: 1199.98px) {
+.auth-content {
+    width: 60%;
+    padding: 50px;
+}
+  
+.auth-container .auth-content {
+  border-radius: 3px;
+}
+
+header {
+  width: 100%;
+}
+}
+
+@media (min-width: 1200px) {
+.auth-content {
+  width: 40%;
+  padding: 50px;
+}
+
+.auth-container .auth-content {
+  border-radius: 3px;
+}
+
+header {
+  width: 100%;
+}
+}
+        
