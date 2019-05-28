@@ -9,7 +9,7 @@ describe('app', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.message).to.equal('Banka app');
+        expect(res.body.message).to.equal('Welcome to Banka app');
         if (err) return done(err);
         done();
       });
