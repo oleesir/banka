@@ -3,12 +3,12 @@ import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import User from '../models/User.model';
 import dummyData from '../dummyDb/db';
-import encrypt from '../helper/encrypt';
+import Encryption from '../helpers/Encryption';
 
 dotenv.config();
 
 const { users } = dummyData;
-const { encryptPassword } = encrypt;
+const { encryptPassword, comparePassword } = Encryption;
 
 /**
  * @exports
@@ -17,10 +17,11 @@ const { encryptPassword } = encrypt;
 export default class AuthController {
   /**
    * @method signup
+   *
    * @param {object} req request
    * @param {object} res response
    *
-   * @returns {object} returns status code, data and message properties
+   * @returns {object} status code, data and message properties
    */
   static signup(req, res) {
     const {
@@ -28,7 +29,7 @@ export default class AuthController {
     } = req.body;
 
     const existingUser = users.some(user => user.email === email);
-    const hash = encryptPassword(password);
+    const hashedPassword = encryptPassword(password);
     if (existingUser) {
       return res.status(409).json({
         status: 409,
@@ -45,14 +46,14 @@ export default class AuthController {
     newUser.firstName = firstName.trim();
     newUser.lastName = lastName.trim();
     newUser.email = email.trim();
-    newUser.hash = hash.trim();
+    newUser.password = hashedPassword;
     newUser.type = 'client';
     newUser.createdAt = moment().format('LLLL');
 
     users.push(newUser);
 
     const payload = { id: newUser.id, email: newUser.email };
-    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1hr' });
+    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
     const data = {
       token,
       id: newUser.id,
@@ -66,6 +67,64 @@ export default class AuthController {
       status: 201,
       data,
       message: 'User registered successfully'
+    });
+  }
+
+  /**
+   * @method signin
+   *
+   * @param {object} req request
+   * @param {object} res response
+   *
+   * @returns {object}  status code, data and message properties
+   */
+  static signin(req, res) {
+    const { email, password } = req.body;
+
+    for (let i = 0; i < users.length; i++) {
+      if (email === users[i].email) {
+        const verifyPassword = comparePassword(password, users[i].password);
+
+        if (!verifyPassword) {
+          return res.status(401).json({
+            status: 401,
+            error: 'Email or password is incorrect'
+          });
+        }
+
+        const {
+          id, firstName, lastName, type, isAdmin
+        } = users[i];
+
+        const payload = {
+          id,
+          firstName,
+          lastName,
+          email,
+          type,
+          isAdmin
+        };
+
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
+
+        const data = {
+          token,
+          id,
+          firstName,
+          lastName,
+          email,
+          type
+        };
+        return res.status(200).json({
+          status: 200,
+          data,
+          message: 'Login successful'
+        });
+      }
+    }
+    return res.status(401).json({
+      status: 401,
+      error: 'Email or password is incorrect'
     });
   }
 }

@@ -12,12 +12,10 @@ app.get('/', (req, res) => res.status(200).json({ message: 'Welcome to Banka app
 
 app.use(ErrorHandler.sendError);
 
-app.get('*', (req, res) => {
-  res.status(404).send({
-    status: 404,
-    error: 'Not found'
-  });
-});
+app.get('*', (req, res) => res.status(404).send({
+  status: 404,
+  error: 'Not found'
+}));
 
 const port = process.env.PORT || 3000;
 

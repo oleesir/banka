@@ -1,4 +1,6 @@
-import isEmpty from '../helper/isEmpty';
+import isEmpty from '../helpers/isEmpty';
+import isValidEmail from '../helpers/validateEmail';
+import containsAlphabets from '../helpers/containsAlphabets';
 /**
  * @exports
  *@class AuthValidation
@@ -16,9 +18,6 @@ export default class AuthValidation {
       firstName, lastName, email, password
     } = req.body;
 
-    // eslint-disable-next-line no-useless-escape
-    const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const containsAlphabets = /^[a-zA-Z ]*$/;
     if (isEmpty(firstName) && isEmpty(lastName) && isEmpty(email) && isEmpty(password)) {
       return res.status(400).json({
         status: 400,
@@ -47,21 +46,21 @@ export default class AuthValidation {
       });
     }
 
-    if (!validEmail.test(email)) {
+    if (!isValidEmail(email)) {
       return res.status(400).json({
         status: 400,
         error: 'Please provide a valid email address'
       });
     }
 
-    if (!containsAlphabets.test(firstName)) {
+    if (!containsAlphabets(firstName)) {
       return res.status(400).json({
         status: 400,
         error: 'First name can only contain alphabets'
       });
     }
 
-    if (!containsAlphabets.test(lastName)) {
+    if (!containsAlphabets(lastName)) {
       return res.status(400).json({
         status: 400,
         error: 'Last name can only contain alphabets'
@@ -83,7 +82,47 @@ export default class AuthValidation {
     }
     return next();
   }
+
+  /**
+   * @method validateSignin
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   *
+   * @returns {object} status code and error message properties
+   */
+  static validateSignin(req, res, next) {
+    const { email, password } = req.body;
+
+    if (isEmpty(email) && isEmpty(password)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Email and password are required'
+      });
+    }
+
+    if (isEmpty(email)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Email is required'
+      });
+    }
+
+    if (isEmpty(password)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Password is required'
+      });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Please provide a valid email address'
+      });
+    }
+
+    return next();
+  }
 }
-export {
-  isEmpty
-};
