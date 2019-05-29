@@ -24,7 +24,7 @@ describe('Auth Routes', () => {
       });
   });
 
-  it('Should not register a new user with empty input fields', (done) => {
+  it('should not register a new user with empty input fields', (done) => {
     const newUser = {
       firstName: '',
       lastName: '',
@@ -44,7 +44,7 @@ describe('Auth Routes', () => {
   });
 
 
-  it('Should not register a new user with an empty first name field', (done) => {
+  it('should not register a new user with an empty first name field', (done) => {
     const newUser = {
       firstName: '',
       lastName: 'gosling',
@@ -83,7 +83,7 @@ describe('Auth Routes', () => {
   });
 
 
-  it('Should not register a user if the first name contains non-alphabets', (done) => {
+  it('should not register a user if the first name contains non-alphabets', (done) => {
     const newUser = {
       firstName: '/865',
       lastName: 'gosling',
@@ -103,7 +103,7 @@ describe('Auth Routes', () => {
       });
   });
 
-  it('Should not register a user if the last name contains non-alphabets', (done) => {
+  it('should not register a user if the last name contains non-alphabets', (done) => {
     const newUser = {
       firstName: 'ryan',
       lastName: '76#@',
@@ -142,7 +142,7 @@ describe('Auth Routes', () => {
       });
   });
 
-  it('Should not register a new user with an invalid email', (done) => {
+  it('should not register a new user with an invalid email', (done) => {
     const newUser = {
       firstName: 'ryan',
       lastName: 'gosling',
@@ -181,7 +181,7 @@ describe('Auth Routes', () => {
       });
   });
 
-  it('Should not register a new user with an invalid password length', (done) => {
+  it('should not register a new user with an invalid password length', (done) => {
     const newUser = {
       firstName: 'ryan',
       lastName: 'gosling',
@@ -201,7 +201,7 @@ describe('Auth Routes', () => {
       });
   });
 
-  it('Should not register a user with an existing email address', (done) => {
+  it('should not register a user with an existing email address', (done) => {
     const newUser = {
       firstName: 'ryan',
       lastName: 'gosling',
@@ -216,6 +216,134 @@ describe('Auth Routes', () => {
         expect(res.status).to.equal(409);
         expect(res.body).to.have.property('status').equal(409);
         expect(res.body).to.have.property('error').equal('User already exists');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should log in an existing user ', (done) => {
+    const newUser = {
+      email: 'ryan@gmail.com',
+      password: 'ryangosl'
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(newUser)
+      .expect(200)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('status').equal(200);
+        expect(res.body).to.have.property('message').equal('Login successful');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should not log in a user with empty email and password fields', (done) => {
+    const newUser = {
+      email: '',
+      password: ''
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(newUser)
+      .expect(400)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('status').equal(400);
+        expect(res.body).to.have.property('error').equal('Email and password are required');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+
+  it('should not log in a user with empty email field', (done) => {
+    const newUser = {
+      email: '',
+      password: 'ryangosl'
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(newUser)
+      .expect(400)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('status').equal(400);
+        expect(res.body).to.have.property('error').equal('Email is required');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+
+  it('should not log in a user with empty password field', (done) => {
+    const newUser = {
+      email: 'ryan@gmail.com',
+      password: ''
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(newUser)
+      .expect(400)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('status').equal(400);
+        expect(res.body).to.have.property('error').equal('Password is required');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should not log in a user with wrong details', (done) => {
+    const user = {
+      email: 'ryan@gmail.com',
+      password: 'ryangoreswe'
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(user)
+      .expect(401)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('status').equal(401);
+        expect(res.body).to.have.property('error').equal('Email or password is incorrect');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it('should not log in a user with wrong details', (done) => {
+    const user = {
+      email: 'ryan@kentucky.com',
+      password: 'ryangosl'
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(user)
+      .expect(401)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('status').equal(401);
+        expect(res.body).to.have.property('error').equal('Email or password is incorrect');
+        if (err) return done(err);
+        done();
+      });
+  });
+
+
+  it('should not log in a new user with an invalid email', (done) => {
+    const newUser = {
+      email: 'ryangmail.com',
+      password: 'ryangosl'
+    };
+    request(app)
+      .post(`${URL}/signin`)
+      .send(newUser)
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body).to.have.property('status').equal(400);
+        expect(res.body).to.have.property('error').equal('Please provide a valid email address');
         if (err) return done(err);
         done();
       });
