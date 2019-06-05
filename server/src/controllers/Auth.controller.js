@@ -30,6 +30,7 @@ export default class AuthController {
 
     const existingUser = users.some(user => user.email === email);
     const hashedPassword = encryptPassword(password);
+
     if (existingUser) {
       return res.status(409).json({
         status: 409,

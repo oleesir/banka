@@ -27,5 +27,27 @@ export default {
       type: 'client',
       isAdmin: 0,
     },
+  ],
+
+  accounts: [
+    {
+      id: 1,
+      accountNumber: 3452783652,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      owner: 2,
+      type: 'current',
+      status: 'active',
+      balance: 8576453.00
+    },
+    {
+      id: 2,
+      accountNumber: 3452783652,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      owner: 3,
+      type: 'savings',
+      status: 'dormant',
+      balance: 2364756.00
+    }
   ]
+
 };

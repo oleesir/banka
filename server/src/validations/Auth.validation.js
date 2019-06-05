@@ -1,6 +1,7 @@
 import isEmpty from '../helpers/isEmpty';
 import isValidEmail from '../helpers/validateEmail';
 import containsAlphabets from '../helpers/containsAlphabets';
+
 /**
  * @exports
  *@class AuthValidation
