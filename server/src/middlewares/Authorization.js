@@ -17,19 +17,20 @@ export default class Authorization {
     const BearerToken = req.headers['x-access-token'] || req.headers.authorization;
     const token = BearerToken.split(' ')[1];
     if (!token) {
-      return res.status(403).json({
-        status: 403,
+      return res.status(401).json({
+        status: 401,
         error: 'Unauthorized you must be logged in'
       });
     }
 
     return jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
-        return res.status(401).json({
-          status: 401,
-          error: 'Invalid token'
-        });
+        if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({ status: 401, error: 'User authorization token is expired' });
+        }
+        return res.status(401).json({ status: 401, error: 'Invalid token' });
       }
+
       req.decoded = decoded;
       return next();
     });

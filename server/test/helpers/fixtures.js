@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 const newUser = {
   firstName: 'ryan',
   lastName: 'gosling',
@@ -5,9 +7,45 @@ const newUser = {
   password: 'ryangosl'
 };
 
+const newUserTwo = {
+  firstName: 'james',
+  lastName: 'green',
+  email: 'green@gmail.com',
+  password: 'jamesgreen'
+};
+
 const authUser = {
   email: 'ryan@gmail.com',
   password: 'ryangosl'
+};
+
+const staffPayload = {
+  id: 2,
+  email: 'amaka@gmail.com',
+  firstName: 'Amaka',
+  lastName: 'Emodi',
+  password: 'secret',
+  type: 'staff',
+  isAdmin: 1,
+};
+
+const clientPayload = {
+  id: 3,
+  email: 'ivy@gmail.com',
+  firstName: 'Iveren',
+  lastName: 'Shaguy',
+  password: 'secret',
+  role: 'client',
+  isAdmin: 0
+};
+
+const staffToken = jwt.sign(staffPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
+const expiredToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1' });
+const fakeToken = 'uh2ygy34758357t.njidvfhvbrubbjb';
+
+const staffUser = {
+  email: 'amaka@gmail.com',
+  password: 'secret'
 };
 
 const emptyAuthUser = {
@@ -36,15 +74,10 @@ const wrongEmailAuthUser = { ...authUser, email: 'ryangmail.com' };
 const emptyPasswordAuthUser = { ...authUser, password: '' };
 const wrongUserAuth = { ...authUser, email: 'ryan@gmail.com', password: 'ryangoreswe' };
 const wrongUserAuthEmail = { ...authUser, email: 'kennygray@gmail.com', password: 'ryangosl' };
-const newAccount = {
-  type: 'savings'
-};
-const emptyType = {
-  type: ''
-};
-const invalidNewAccount = {
-  type: 'credit'
-};
+const newAccount = { type: 'savings' };
+const newAccountTwo = { type: 'current' };
+const emptyType = { type: '' };
+const invalidNewAccount = { type: 'credit' };
 
 export {
   newUser,
@@ -67,5 +100,11 @@ export {
   wrongEmailAuthUser,
   newAccount,
   emptyType,
-  invalidNewAccount
+  invalidNewAccount,
+  staffUser,
+  newUserTwo,
+  newAccountTwo,
+  staffToken,
+  expiredToken,
+  fakeToken
 };
