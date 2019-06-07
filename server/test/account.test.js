@@ -98,7 +98,7 @@ describe('Account Routes', () => {
       .expect(401)
       .end((err, res) => {
         expect(res.body).to.have.property('status').eql(401);
-        expect(res.body).to.have.property('error').to.eql('Unauthorized you must be logged in');
+        expect(res.body).to.have.property('error').to.eql('Please provide a token');
         expect(res.status).to.equal(401);
         if (err) return done(err);
         done();

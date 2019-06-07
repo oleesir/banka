@@ -38,8 +38,8 @@ export default class AccountController {
     newAccount.owner = id;
     newAccount.createdAt = moment().format('LLLL');
     newAccount.type = type;
-    newAccount.status = 'Active';
-    newAccount.balance = 0.0;
+    newAccount.status = 'Dormant';
+    newAccount.balance = Number.parseFloat(0.00).toFixed(2);
 
     accounts.push(newAccount);
 

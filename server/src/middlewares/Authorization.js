@@ -15,11 +15,11 @@ export default class Authorization {
    */
   static checkToken(req, res, next) {
     const BearerToken = req.headers['x-access-token'] || req.headers.authorization;
-    const token = BearerToken.split(' ')[1];
+    const token = BearerToken && BearerToken.replace('Bearer ', '');
     if (!token) {
       return res.status(401).json({
         status: 401,
-        error: 'Unauthorized you must be logged in'
+        error: 'Please provide a token'
       });
     }
 

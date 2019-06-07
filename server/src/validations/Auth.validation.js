@@ -4,7 +4,7 @@ import containsAlphabets from '../helpers/containsAlphabets';
 
 /**
  * @exports
- *@class AuthValidation
+ * @class AuthValidation
  */
 export default class AuthValidation {
   /**
