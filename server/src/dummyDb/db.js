@@ -6,8 +6,8 @@ export default {
       firstName: 'Olisa',
       lastName: 'Emodi',
       password: 'secret',
-      type: 'client',
-      isAdmin: 0,
+      role: 'client',
+      isAdmin: 0
     },
     {
       id: 2,
@@ -15,8 +15,8 @@ export default {
       firstName: 'Amaka',
       lastName: 'Emodi',
       password: 'secret',
-      type: 'staff',
-      isAdmin: 1,
+      role: 'staff',
+      isAdmin: 1
     },
     {
       id: 3,
@@ -24,8 +24,30 @@ export default {
       firstName: 'Iveren',
       lastName: 'Shaguy',
       password: 'secret',
-      type: 'client',
-      isAdmin: 0,
+      role: 'client',
+      isAdmin: 0
     },
+  ],
+
+  accounts: [
+    {
+      id: 1,
+      accountNumber: 3452783652,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      owner: 2,
+      type: 'current',
+      status: 'active',
+      balance: 8576453.00
+    },
+    {
+      id: 2,
+      accountNumber: 9870654673,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      owner: 3,
+      type: 'savings',
+      status: 'dormant',
+      balance: 2364756.00
+    }
   ]
+
 };

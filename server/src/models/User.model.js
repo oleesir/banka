@@ -11,7 +11,7 @@ export default class User {
     this.email = null;
     this.firstName = null;
     this.lastName = null;
-    this.type = null;
+    this.role = null;
     this.isAdmin = false;
   }
 }

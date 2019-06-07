@@ -28,9 +28,10 @@ export default class AuthController {
       firstName, lastName, email, password
     } = req.body;
 
-    const existingUser = users.some(user => user.email === email);
+    const userExists = users.some(user => user.email === email);
     const hashedPassword = encryptPassword(password);
-    if (existingUser) {
+
+    if (userExists) {
       return res.status(409).json({
         status: 409,
         error: 'User already exists'
@@ -47,7 +48,7 @@ export default class AuthController {
     newUser.lastName = lastName.trim();
     newUser.email = email.trim();
     newUser.password = hashedPassword;
-    newUser.type = 'client';
+    newUser.role = 'client';
     newUser.createdAt = moment().format('LLLL');
 
     users.push(newUser);
@@ -60,7 +61,7 @@ export default class AuthController {
       firstName: newUser.firstName,
       lastName: newUser.lastName,
       email: newUser.email,
-      type: newUser.type,
+      role: newUser.role,
       createdAt: newUser.createdAt
     };
     return res.status(201).json({
@@ -93,7 +94,7 @@ export default class AuthController {
         }
 
         const {
-          id, firstName, lastName, type, isAdmin
+          id, firstName, lastName, role, isAdmin
         } = users[i];
 
         const payload = {
@@ -101,7 +102,7 @@ export default class AuthController {
           firstName,
           lastName,
           email,
-          type,
+          role,
           isAdmin
         };
 
@@ -113,7 +114,7 @@ export default class AuthController {
           firstName,
           lastName,
           email,
-          type
+          role
         };
         return res.status(200).json({
           status: 200,

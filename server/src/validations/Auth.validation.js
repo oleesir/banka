@@ -1,9 +1,10 @@
 import isEmpty from '../helpers/isEmpty';
 import isValidEmail from '../helpers/validateEmail';
 import containsAlphabets from '../helpers/containsAlphabets';
+
 /**
  * @exports
- *@class AuthValidation
+ * @class AuthValidation
  */
 export default class AuthValidation {
   /**
