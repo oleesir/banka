@@ -7,7 +7,7 @@ const generateNumber = () => {
   const existingNumber = accounts.some(acct => acct.accountNumber === accountNumber);
 
   if (existingNumber) {
-    return generateNumber;
+    return generateNumber();
   }
   return accountNumber;
 };

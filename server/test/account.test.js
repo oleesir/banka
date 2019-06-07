@@ -37,7 +37,8 @@ describe('Account Routes', () => {
       .expect(201)
       .end((err, res) => {
         expect(res.body).to.have.property('status').eql(201);
-        expect(res.body.data).to.have.property('id');
+        expect(res.body.data).to.have.property('id').eql(3);
+        expect(res.body.data).to.have.property('openingBalance').eql(0.00);
         expect(res.body).to.have.nested.property('data.accountNumber');
         expect(res.body).to.have.property('message').eql('Account created');
         if (err) return done(err);

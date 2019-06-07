@@ -32,6 +32,7 @@ export default class AccountController {
     const newAccount = new Account();
     const accountsLength = accounts.length;
     const lastId = accounts[accountsLength - 1].id;
+
     const newId = lastId + 1;
     newAccount.id = newId;
     newAccount.accountNumber = generateNumber();
@@ -39,12 +40,11 @@ export default class AccountController {
     newAccount.createdAt = moment().format('LLLL');
     newAccount.type = type;
     newAccount.status = 'Dormant';
-    newAccount.balance = Number.parseFloat(0.00).toFixed(2);
+    newAccount.balance = parseFloat(0.00.toFixed(2));
 
     accounts.push(newAccount);
-
     const data = {
-      id,
+      id: newId,
       accountNumber: newAccount.accountNumber,
       firstName,
       lastName,
