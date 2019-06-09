@@ -42,14 +42,15 @@ export default class AccountValidation {
    */
   static validateGetAccount(req, res, next) {
     const { accountNumber } = req.params;
-    const isNum = /^\d+$/; // gotten from Scott Evernden on Stack Overflow
+    const isNum = /^\d+$/;
 
     if (accountNumber.length !== 10) {
       return res.status(400).json({
         status: 400,
-        error: 'Account number must not be more than 10 digits'
+        error: 'Account number must be 10 digits'
       });
     }
+
 
     if (!isNum.test(accountNumber)) {
       return res.status(400).json({
@@ -57,6 +58,7 @@ export default class AccountValidation {
         error: 'Account number can only contain digits'
       });
     }
+
 
     return next();
   }

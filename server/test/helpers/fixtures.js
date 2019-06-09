@@ -12,6 +12,7 @@ const invalidAccountNumber = 34564765298;
 const doesNotContainDigits = '35278365u4';
 const emptyAccountNumber = '';
 const nonExistingAccountNumber = 9879878967;
+const lessThanTenDigits = 2345632;
 
 const newUserTwo = {
   firstName: 'james',
@@ -117,5 +118,6 @@ export {
   invalidAccountNumber,
   emptyAccountNumber,
   doesNotContainDigits,
-  nonExistingAccountNumber
+  nonExistingAccountNumber,
+  lessThanTenDigits
 };

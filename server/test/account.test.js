@@ -13,7 +13,8 @@ import {
   doesNotContainDigits,
   invalidAccountNumber,
   emptyAccountNumber,
-  nonExistingAccountNumber
+  nonExistingAccountNumber,
+  lessThanTenDigits
 } from './helpers/fixtures';
 
 const URL = '/api/v1';
@@ -180,13 +181,26 @@ describe('Account Routes', () => {
         .expect(400)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(400);
-          expect(res.body).to.have.property('error').to.eql('Account number must not be more than 10 digits');
+          expect(res.body).to.have.property('error').to.eql('Account number must be 10 digits');
           expect(res.status).to.equal(400);
           if (err) return done(err);
           done();
         });
     });
 
+    it('should not get an account number less than 10 digits', (done) => {
+      request(app)
+        .get(`${URL}/accounts/${lessThanTenDigits}`)
+        .set('Authorization', `Bearer ${authToken}`)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Account number must be 10 digits');
+          expect(res.status).to.equal(400);
+          if (err) return done(err);
+          done();
+        });
+    });
 
     it('should not get an account number if its not an integer', (done) => {
       request(app)
@@ -218,7 +232,7 @@ describe('Account Routes', () => {
     });
 
 
-    it('Should not get a non-existing account', (done) => {
+    it('should not get a non-existing account', (done) => {
       request(app)
         .get(`${URL}/accounts/${nonExistingAccountNumber}`)
         .set('Authorization', `Bearer ${authToken}`)
