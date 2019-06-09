@@ -7,6 +7,12 @@ const newUser = {
   password: 'ryangosl'
 };
 
+const userAccountNumber = 3452783652;
+const invalidAccountNumber = 34564765298;
+const doesNotContainDigits = '35278365u4';
+const emptyAccountNumber = '';
+const nonExistingAccountNumber = 9879878967;
+
 const newUserTwo = {
   firstName: 'james',
   lastName: 'green',
@@ -106,5 +112,10 @@ export {
   newAccountTwo,
   staffToken,
   expiredToken,
-  fakeToken
+  fakeToken,
+  userAccountNumber,
+  invalidAccountNumber,
+  emptyAccountNumber,
+  doesNotContainDigits,
+  nonExistingAccountNumber
 };

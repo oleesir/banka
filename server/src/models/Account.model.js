@@ -12,5 +12,6 @@ export default class Account {
     this.type = null;
     this.status = null;
     this.balance = null;
+    this.createdOn = null;
   }
 }
