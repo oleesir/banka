@@ -73,9 +73,8 @@ export default class AccountController {
  */
   static getAccount(req, res) {
     const { accountNumber } = req.params;
-    const retriveAccount = accounts.find(
-      account => account.accountNumber === parseInt(accountNumber, 10)
-    );
+    const retriveAccount = accounts
+      .find(account => account.accountNumber === parseInt(accountNumber, 10));
 
     if (isEmpty(retriveAccount)) {
       return res.status(404).json({
