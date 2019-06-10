@@ -4,12 +4,13 @@ import AccountController from '../controllers/Account.controller';
 import Authorization from '../middlewares/Authorization';
 import asyncErrorHandler from '../middlewares/asyncErrorHandler';
 
-const { validateCreateAccount } = AccountValidation;
+const { validateCreateAccount, validateGetAccount } = AccountValidation;
 const { checkToken } = Authorization;
-const { createAccount } = AccountController;
+const { createAccount, getAccount } = AccountController;
 
 const router = Router();
 
 router.post('/', checkToken, validateCreateAccount, asyncErrorHandler(createAccount));
+router.get('/:accountNumber', checkToken, validateGetAccount, asyncErrorHandler(getAccount));
 
 export default router;

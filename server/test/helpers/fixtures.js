@@ -7,6 +7,14 @@ const newUser = {
   password: 'ryangosl'
 };
 
+const userAccountNumber = 3452783652;
+const invalidAccountNumber = 34564765298;
+const doesNotContainDigits = '35278365u4';
+const emptyAccountNumber = '';
+const nonExistingAccountNumber = 9879878967;
+const lessThanTenDigits = 2345632;
+const wrongAccountNumber = 3452783652;
+
 const newUserTwo = {
   firstName: 'james',
   lastName: 'green',
@@ -19,14 +27,14 @@ const authUser = {
   password: 'ryangosl'
 };
 
-const staffPayload = {
+const adminPayload = {
   id: 2,
   email: 'amaka@gmail.com',
   firstName: 'Amaka',
   lastName: 'Emodi',
   password: 'secret',
   type: 'staff',
-  isAdmin: 1,
+  isAdmin: true,
 };
 
 const clientPayload = {
@@ -36,10 +44,21 @@ const clientPayload = {
   lastName: 'Shaguy',
   password: 'secret',
   role: 'client',
-  isAdmin: 0
 };
 
+const staffPayload = {
+  id: 1,
+  email: 'olisa@gmail.com',
+  firstName: 'Olisa',
+  lastName: 'Emodi',
+  password: 'secret',
+  role: 'staff',
+  isAdmin: false
+};
+
+const clientToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const staffToken = jwt.sign(staffPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
+const adminToken = jwt.sign(adminPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const expiredToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1' });
 const fakeToken = 'uh2ygy34758357t.njidvfhvbrubbjb';
 
@@ -105,6 +124,15 @@ export {
   newUserTwo,
   newAccountTwo,
   staffToken,
+  clientToken,
+  adminToken,
   expiredToken,
-  fakeToken
+  fakeToken,
+  userAccountNumber,
+  invalidAccountNumber,
+  emptyAccountNumber,
+  doesNotContainDigits,
+  nonExistingAccountNumber,
+  lessThanTenDigits,
+  wrongAccountNumber
 };

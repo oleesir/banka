@@ -13,5 +13,6 @@ export default class User {
     this.lastName = null;
     this.role = null;
     this.isAdmin = false;
+    this.createdOn = null;
   }
 }

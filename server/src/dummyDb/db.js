@@ -2,21 +2,21 @@ export default {
   users: [
     {
       id: 1,
-      email: 'olisa@gmail.com',
-      firstName: 'Olisa',
-      lastName: 'Emodi',
-      password: 'secret',
-      role: 'client',
-      isAdmin: 0
-    },
-    {
-      id: 2,
       email: 'amaka@gmail.com',
       firstName: 'Amaka',
       lastName: 'Emodi',
       password: 'secret',
       role: 'staff',
-      isAdmin: 1
+      isAdmin: true
+    },
+    {
+      id: 2,
+      email: 'olisa@gmail.com',
+      firstName: 'Olisa',
+      lastName: 'Emodi',
+      password: 'secret',
+      role: 'staff',
+      isAdmin: false
     },
     {
       id: 3,
@@ -25,7 +25,16 @@ export default {
       lastName: 'Shaguy',
       password: 'secret',
       role: 'client',
-      isAdmin: 0
+      isAdmin: false
+    },
+    {
+      id: 4,
+      email: 'nne@gmail.com',
+      firstName: 'Nneka',
+      lastName: 'Oguah',
+      password: 'secret',
+      role: 'client',
+      isAdmin: false
     },
   ],
 
@@ -34,7 +43,7 @@ export default {
       id: 1,
       accountNumber: 3452783652,
       createdOn: 'Thursday, May 30, 2019 5:11 PM',
-      owner: 2,
+      owner: 4,
       type: 'current',
       status: 'active',
       balance: 8576453.00
@@ -49,5 +58,4 @@ export default {
       balance: 2364756.00
     }
   ]
-
 };
