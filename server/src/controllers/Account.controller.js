@@ -82,7 +82,7 @@ export default class AccountController {
       retriveAccount = accounts
         .find(account => (
           account.accountNumber === parseInt(accountNumber, 10)
-          && userId === account.owner // account owner is the same as the user id
+          && userId === account.owner
         ));
     } else {
       // staff or admin can get any account
