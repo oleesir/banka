@@ -14,6 +14,7 @@ const emptyAccountNumber = '';
 const nonExistingAccountNumber = 9879878967;
 const lessThanTenDigits = 2345632;
 const wrongAccountNumber = 3452783652;
+const accountNumberTransaction = 9987456386;
 
 const newUserTwo = {
   firstName: 'james',
@@ -56,6 +57,7 @@ const staffPayload = {
   isAdmin: false
 };
 
+
 const clientToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const staffToken = jwt.sign(staffPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const adminToken = jwt.sign(adminPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
@@ -78,6 +80,21 @@ const emptyUser = {
   email: '',
   password: ''
 };
+
+const creditTransaction = {
+  amount: 1500
+};
+
+const emptyAmount = '';
+
+const negativeInput = {
+  amount: -12345
+};
+
+const invalidCharacters = {
+  amount: '3455u6'
+};
+
 
 const emptyFirstName = { ...newUser, firstName: '' };
 const emptyLastName = { ...newUser, lastName: '' };
@@ -134,5 +151,10 @@ export {
   doesNotContainDigits,
   nonExistingAccountNumber,
   lessThanTenDigits,
-  wrongAccountNumber
+  wrongAccountNumber,
+  creditTransaction,
+  accountNumberTransaction,
+  emptyAmount,
+  negativeInput,
+  invalidCharacters
 };

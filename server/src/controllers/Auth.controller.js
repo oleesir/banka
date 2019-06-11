@@ -28,6 +28,7 @@ export default class AuthController {
       firstName, lastName, email, password
     } = req.body;
 
+
     const userExists = users.some(user => user.email === email);
     const hashedPassword = encryptPassword(password);
 
@@ -114,7 +115,8 @@ export default class AuthController {
           firstName,
           lastName,
           email,
-          role
+          role,
+          isAdmin
         };
         return res.status(200).json({
           status: 200,
