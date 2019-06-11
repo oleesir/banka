@@ -13,10 +13,12 @@ const { validateCreditTransaction } = TransactionValidation;
 const { validateGetAccount } = AccountValidation;
 
 router
-  . post('/:accountNumber/credit',
+  . post(
+    '/:accountNumber/credit',
     checkToken,
     validateGetAccount,
     validateCreditTransaction,
-    asyncErrorHandler(creditTransaction));
+    asyncErrorHandler(creditTransaction)
+  );
 
 export default router;
