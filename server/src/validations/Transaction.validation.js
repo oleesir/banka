@@ -17,7 +17,7 @@ export default class TransactionValidation {
     if (amount < 1) {
       return res.status(400).json({
         status: 400,
-        error: 'Credit transaction cannot be less than 1 Naira'
+        error: 'Credit transaction amount cannot be less than 1 Naira'
       });
     }
 
@@ -31,7 +31,7 @@ export default class TransactionValidation {
     if (!Number(amount)) {
       return res.status(400).json({
         status: 400,
-        error: 'Transactions can only contain digits'
+        error: 'Transaction amount can only contain digits'
       });
     }
     return next();

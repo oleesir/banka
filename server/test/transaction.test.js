@@ -36,7 +36,7 @@ describe('Transaction Route', () => {
         });
     });
 
-    it('should let a cashier credit an empty amount field', (done) => {
+    it('should let a cashier credit an account with an empty amount field', (done) => {
       request(app)
         .post(`${URL}/transactions/${accountNumberTransaction}/credit`)
         .send(emptyAmount)
@@ -51,7 +51,7 @@ describe('Transaction Route', () => {
         });
     });
 
-    it('should not let a cashier credit an account with negative input', (done) => {
+    it('should not let a cashier credit an account with negative amount', (done) => {
       request(app)
         .post(`${URL}/transactions/${accountNumberTransaction}/credit`)
         .send(negativeInput)
@@ -60,7 +60,7 @@ describe('Transaction Route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.have.property('status').eql(400);
-          expect(res.body).to.have.property('error').to.eql('Credit transaction cannot be less than 1 Naira');
+          expect(res.body).to.have.property('error').to.eql('Credit transaction amount cannot be less than 1 Naira');
           if (err) return done(err);
           done();
         });
@@ -76,7 +76,7 @@ describe('Transaction Route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.have.property('status').eql(400);
-          expect(res.body).to.have.property('error').to.eql('Transactions can only contain digits');
+          expect(res.body).to.have.property('error').to.eql('Transaction amount can only contain digits');
           if (err) return done(err);
           done();
         });

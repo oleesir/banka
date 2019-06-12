@@ -56,6 +56,7 @@ export default class TransactionController {
 
     // update account
     accountToCredit.balance = newTransaction.newBalance;
+    accountToCredit.status = 'active';
 
     transactions.push(newTransaction);
 
@@ -65,7 +66,7 @@ export default class TransactionController {
       amount: newTransaction.amount,
       cashier: newTransaction.cashier,
       type: newTransaction.type,
-
+      status: accountToCredit.status,
       accountBalance: accountToCredit.balance
     };
 
