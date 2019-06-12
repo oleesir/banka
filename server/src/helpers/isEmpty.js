@@ -1,9 +1,9 @@
-/*
-* @description Function to check that input is not empty, undefined or null
-*
-* @param {any} value The data type to be checked
-*
-* @returns {Boolean}
+/**
+ * @description Function to check that input is not empty, undefined or null
+ *
+ *  @param {any} value The data type to be checked
+ *
+ * @returns {Boolean} true
 */
 const isEmpty = value => (
   value === undefined
