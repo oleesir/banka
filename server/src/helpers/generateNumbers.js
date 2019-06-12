@@ -4,9 +4,7 @@ const { accounts } = db;
 /**
  * @description Function to generate 10 Digit Random Number
  *
- * @param {any} value The data type to be checked
- *
- * @returns {Boolean} true or false
+ * @returns {number} it returns random numbers
  */
 const generateNumber = () => {
   const accountNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
