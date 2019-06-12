@@ -38,7 +38,7 @@ export default class AccountController {
     newAccount.id = newId;
     newAccount.accountNumber = generateNumber();
     newAccount.owner = id;
-    newAccount.createdOn = moment().format('LLLL');
+    newAccount.createdOn = moment().format();
     newAccount.type = type;
     newAccount.status = 'dormant';
     newAccount.balance = parseFloat(0.00.toFixed(2));

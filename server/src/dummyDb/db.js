@@ -5,7 +5,7 @@ export default {
       email: 'amaka@gmail.com',
       firstName: 'Amaka',
       lastName: 'Emodi',
-      password: 'secret',
+      password: '$2b$10$cI8umn6Pm692nWb.mOHYS.wPvUo0KMdsiIsS1TMoIoQnAhrZHb8ta',
       role: 'staff',
       isAdmin: true
     },
@@ -14,7 +14,7 @@ export default {
       email: 'olisa@gmail.com',
       firstName: 'Olisa',
       lastName: 'Emodi',
-      password: 'secret',
+      password: '$2b$10$cI8umn6Pm692nWb.mOHYS.wPvUo0KMdsiIsS1TMoIoQnAhrZHb8ta',
       role: 'staff',
       isAdmin: false
     },
@@ -23,7 +23,7 @@ export default {
       email: 'ivy@gmail.com',
       firstName: 'Iveren',
       lastName: 'Shaguy',
-      password: 'secret',
+      password: '$2b$10$cI8umn6Pm692nWb.mOHYS.wPvUo0KMdsiIsS1TMoIoQnAhrZHb8ta',
       role: 'client',
       isAdmin: false
     },
@@ -32,7 +32,7 @@ export default {
       email: 'nne@gmail.com',
       firstName: 'Nneka',
       lastName: 'Oguah',
-      password: 'secret',
+      password: '$2b$10$cI8umn6Pm692nWb.mOHYS.wPvUo0KMdsiIsS1TMoIoQnAhrZHb8ta',
       role: 'client',
       isAdmin: false
     },
@@ -57,5 +57,38 @@ export default {
       status: 'dormant',
       balance: 2364756.00
     }
+  ],
+  transactions: [
+    {
+      id: 1,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      transactypeType: 'credit',
+      accountNumber: 9987456386,
+      cashier: 2,
+      amount: 2000.00,
+      oldBalance: 4000.00,
+      newBalance: 6000.00
+    },
+    {
+      id: 2,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      transactypeType: 'debit',
+      accountNumber: 1123986435,
+      cashier: 3,
+      amount: 6000.00,
+      oldBalance: 10000.00,
+      newBalance: 4000.00
+    },
+    {
+      id: 3,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      transactypeType: 'credit',
+      accountNumber: 7658934562,
+      cashier: 1,
+      amount: 10000.00,
+      oldBalance: 25000.00,
+      newBalance: 35000.00
+    }
+
   ]
 };
