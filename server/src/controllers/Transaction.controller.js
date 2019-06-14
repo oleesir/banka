@@ -73,7 +73,7 @@ export default class TransactionController {
     return res.status(200).json({
       status: 200,
       data,
-      message: `N${newTransaction.amount} was credited to your account`
+      message: `${newTransaction.amount} was credited to your account`
     });
   }
 
@@ -108,7 +108,14 @@ export default class TransactionController {
       });
     }
 
-    const { accountNumber: userAccountNumber, balance } = accountToDebit;
+    const { accountNumber: userAccountNumber, balance, status } = accountToDebit;
+
+    if (status === 'dormant') {
+      return res.status(400).json({
+        status: 400,
+        error: 'This account is not active please contact the admin'
+      });
+    }
     const balanceWithdrawable = balance - minimumBalance;
 
     if (amount > balanceWithdrawable) {
@@ -151,7 +158,7 @@ export default class TransactionController {
     return res.status(200).json({
       status: 200,
       data,
-      message: `N${newTransaction.amount} was debited from your account`
+      message: `${newTransaction.amount} was debited from your account`
     });
   }
 }

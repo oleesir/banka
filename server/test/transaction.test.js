@@ -12,7 +12,9 @@ import {
   clientToken,
   nonExistingAccountNumber,
   debitTransaction,
-  insufficientTransaction
+  insufficientTransaction,
+  dormantAccount,
+  dormantTransaction
 } from './helpers/fixtures';
 
 const URL = '/api/v1';
@@ -32,7 +34,7 @@ describe('Transaction Route', () => {
           expect(res.body.data).to.have.nested.property('type');
           expect(res.body.data).to.have.nested.property('accountBalance');
           expect(res.body.data).to.have.nested.property('amount');
-          expect(res.body).to.have.property('message').eql('N1500 was credited to your account');
+          expect(res.body).to.have.property('message').eql('1500 was credited to your account');
           if (err) return done(err);
           done();
         });
@@ -131,13 +133,13 @@ describe('Transaction Route', () => {
           expect(res.body.data).to.have.nested.property('type');
           expect(res.body.data).to.have.nested.property('accountBalance');
           expect(res.body.data).to.have.nested.property('amount');
-          expect(res.body).to.have.property('message').eql('N500 was debited from your account');
+          expect(res.body).to.have.property('message').eql('500 was debited from your account');
           if (err) return done(err);
           done();
         });
     });
 
-    it('should  not let a cashier debit an account with an empty amount field', (done) => {
+    it('should not let a cashier debit an account with an empty amount field', (done) => {
       request(app)
         .post(`${URL}/transactions/${accountNumberTransaction}/debit`)
         .send(emptyAmount)
@@ -214,22 +216,6 @@ describe('Transaction Route', () => {
     });
 
 
-    it('should not let a cashier debit a non existing account', (done) => {
-      request(app)
-        .post(`${URL}/transactions/${nonExistingAccountNumber}/debit`)
-        .send(debitTransaction)
-        .set('Authorization', `Bearer ${staffToken}`)
-        .expect(404)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body).to.have.property('status').eql(404);
-          expect(res.body).to.have.property('error').to.eql('Account does not exist');
-          if (err) return done(err);
-          done();
-        });
-    });
-
-
     it('should not let a cashier debit an account with insufficient funds', (done) => {
       request(app)
         .post(`${URL}/transactions/${userAccountNumber}/debit`)
@@ -240,6 +226,22 @@ describe('Transaction Route', () => {
           expect(res.status).to.equal(400);
           expect(res.body).to.have.property('status').eql(400);
           expect(res.body).to.have.property('error').to.eql('Insufficient funds, cannot perform transaction');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should not let a cashier debit a dormant account', (done) => {
+      request(app)
+        .post(`${URL}/transactions/${dormantTransaction}/debit`)
+        .send(dormantAccount)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('This account is not active please contact the admin');
           if (err) return done(err);
           done();
         });
