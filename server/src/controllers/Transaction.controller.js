@@ -73,7 +73,7 @@ export default class TransactionController {
     return res.status(200).json({
       status: 200,
       data,
-      message: 'Transaction was successful'
+      message: `N${newTransaction.amount} was credited to your account`
     });
   }
 
@@ -99,9 +99,7 @@ export default class TransactionController {
     }
 
     const accountToDebit = accounts
-      .find(
-        account => account.accountNumber === parseInt(accountNumber, 10)
-      );
+      .find(account => account.accountNumber === parseInt(accountNumber, 10));
 
     if (!accountToDebit) {
       return res.status(404).json({
@@ -153,7 +151,7 @@ export default class TransactionController {
     return res.status(200).json({
       status: 200,
       data,
-      message: 'Transaction was successful'
+      message: `N${newTransaction.amount} was debited from your account`
     });
   }
 }

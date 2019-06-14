@@ -32,7 +32,7 @@ describe('Transaction Route', () => {
           expect(res.body.data).to.have.nested.property('type');
           expect(res.body.data).to.have.nested.property('accountBalance');
           expect(res.body.data).to.have.nested.property('amount');
-          expect(res.body).to.have.property('message').eql('Transaction was successful');
+          expect(res.body).to.have.property('message').eql('N1500 was credited to your account');
           if (err) return done(err);
           done();
         });
@@ -131,7 +131,7 @@ describe('Transaction Route', () => {
           expect(res.body.data).to.have.nested.property('type');
           expect(res.body.data).to.have.nested.property('accountBalance');
           expect(res.body.data).to.have.nested.property('amount');
-          expect(res.body).to.have.property('message').eql('Transaction was successful');
+          expect(res.body).to.have.property('message').eql('N500 was debited from your account');
           if (err) return done(err);
           done();
         });
