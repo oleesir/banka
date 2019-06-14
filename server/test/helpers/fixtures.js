@@ -85,6 +85,10 @@ const creditTransaction = {
   amount: 1500
 };
 
+const debitTransaction = {
+  amount: 500
+};
+
 const emptyAmount = '';
 
 const negativeInput = {
@@ -93,6 +97,10 @@ const negativeInput = {
 
 const invalidCharacters = {
   amount: '3455u6'
+};
+
+const insufficientTransaction = {
+  amount: 90000000
 };
 
 
@@ -156,5 +164,7 @@ export {
   accountNumberTransaction,
   emptyAmount,
   negativeInput,
-  invalidCharacters
+  invalidCharacters,
+  debitTransaction,
+  insufficientTransaction
 };
