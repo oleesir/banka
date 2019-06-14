@@ -15,6 +15,7 @@ const nonExistingAccountNumber = 9879878967;
 const lessThanTenDigits = 2345632;
 const wrongAccountNumber = 3452783652;
 const accountNumberTransaction = 9987456386;
+const dormantTransaction = 9870654673;
 
 const newUserTwo = {
   firstName: 'james',
@@ -85,6 +86,10 @@ const creditTransaction = {
   amount: 1500
 };
 
+const debitTransaction = {
+  amount: 500
+};
+
 const emptyAmount = '';
 
 const negativeInput = {
@@ -93,6 +98,15 @@ const negativeInput = {
 
 const invalidCharacters = {
   amount: '3455u6'
+};
+
+const insufficientTransaction = {
+  amount: 90000000
+};
+
+const dormantAccount = {
+  status: 'dormant',
+  amount: 5000
 };
 
 
@@ -156,5 +170,9 @@ export {
   accountNumberTransaction,
   emptyAmount,
   negativeInput,
-  invalidCharacters
+  invalidCharacters,
+  debitTransaction,
+  insufficientTransaction,
+  dormantAccount,
+  dormantTransaction
 };

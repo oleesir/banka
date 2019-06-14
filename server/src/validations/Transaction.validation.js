@@ -36,4 +36,39 @@ export default class TransactionValidation {
     }
     return next();
   }
+
+  /**
+  * @method validateDebitTransaction
+  *
+  * @param {object} req
+  * @param {object} res
+  * @param {function} next
+  *
+  * @returns {object} status code and error message properties
+  */
+  static validateDebitTransaction(req, res, next) {
+    const { amount } = req.body;
+
+    if (isEmpty(amount)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Transaction amount cannot be empty'
+      });
+    }
+
+    if (amount < 1) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Debit transaction amount cannot be less than 1 Naira'
+      });
+    }
+
+    if (!Number(amount)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Transaction amount can only contain digits'
+      });
+    }
+    return next();
+  }
 }
