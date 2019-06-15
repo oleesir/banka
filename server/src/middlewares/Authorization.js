@@ -35,4 +35,26 @@ export default class Authorization {
       return next();
     });
   }
+
+  /**
+   * @method authorizeRole
+   *
+   * @param {string} role
+   *
+   * @returns {function} middleware to authorize role
+   */
+  static authorizeRole(role) {
+    return (req, res, next) => {
+      const { role: userRole } = req.decoded;
+
+      if (role !== userRole) {
+        return res.status(401).json({
+          status: 401,
+          error: 'You are not authorized to perform this action'
+        });
+      }
+
+      next();
+    };
+  }
 }

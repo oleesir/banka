@@ -21,12 +21,6 @@ export default class TransactionController {
     const { amount } = req.body;
     const { role, id } = req.decoded;
 
-    if (role !== 'staff') {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not authorized to carry out that action'
-      });
-    }
 
     const accountToCredit = accounts
       .find(account => account.accountNumber === parseInt(accountNumber, 10));
@@ -90,13 +84,6 @@ export default class TransactionController {
     const { amount } = req.body;
     const { role, id } = req.decoded;
     const minimumBalance = 500;
-
-    if (role !== 'staff') {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not authorized to carry out that action'
-      });
-    }
 
     const accountToDebit = accounts
       .find(account => account.accountNumber === parseInt(accountNumber, 10));

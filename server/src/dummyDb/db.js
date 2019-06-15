@@ -56,6 +56,15 @@ export default {
       type: 'savings',
       status: 'dormant',
       balance: 2364756.00
+    },
+    {
+      id: 3,
+      accountNumber: 1234352387,
+      createdOn: 'Thursday, May 30, 2019 5:11 PM',
+      owner: 2,
+      type: 'savings',
+      status: 'active',
+      balance: 2845167.00
     }
   ],
   transactions: [

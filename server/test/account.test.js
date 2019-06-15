@@ -16,6 +16,7 @@ import {
   nonExistingAccountNumber,
   lessThanTenDigits,
   wrongAccountNumber,
+  deleteAccountNumber,
 } from './helpers/fixtures';
 
 const URL = '/api/v1';
@@ -30,7 +31,7 @@ describe('Account Routes', () => {
         .expect(201)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(201);
-          expect(res.body.data).to.have.property('id').eql(3);
+          expect(res.body.data).to.have.property('id').eql(4);
           expect(res.body.data).to.have.property('openingBalance').eql(0.00);
           expect(res.body.data).to.have.property('status').eql('dormant');
           expect(res.body).to.have.nested.property('data.accountNumber');
@@ -78,7 +79,7 @@ describe('Account Routes', () => {
         .expect(401)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('Only clients can create accounts');
+          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
           expect(res.status).to.equal(401);
           if (err) return done(err);
           done();
@@ -258,6 +259,51 @@ describe('Account Routes', () => {
           expect(res.body).to.have.property('status').eql(404);
           expect(res.body).to.have.property('error').to.eql('Account does not exist');
           expect(res.status).to.equal(404);
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('Delete Account', () => {
+    it('should allow an Admin staff user to do delete an account', (done) => {
+      request(app)
+        .delete(`${URL}/accounts/${deleteAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(200);
+          expect(res.body).to.have.property('message').to.eql('Account deleted successfully');
+          expect(res.status).to.equal(200);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('Should not allow a client delete an account', (done) => {
+      request(app)
+        .delete(`${URL}/accounts/${deleteAccountNumber}`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(401);
+          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
+          expect(res.status).to.equal(401);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should not delete a non-existing account', (done) => {
+      request(app)
+        .delete(`${URL}/accounts/${nonExistingAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Account does not exist');
+          expect(res.status).to.equal(400);
           if (err) return done(err);
           done();
         });

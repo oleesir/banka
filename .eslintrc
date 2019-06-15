@@ -8,6 +8,7 @@
     "mocha":true
   },
   "rules": {
+    "babel/semi": 1,
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "new-cap": 0,
@@ -59,5 +60,8 @@
         "allowForLoopAfterthoughts": true 
       }
     ]
-}
+  },
+  "plugins": [
+    "babel"
+  ]
 }

@@ -16,6 +16,7 @@ const lessThanTenDigits = 2345632;
 const wrongAccountNumber = 3452783652;
 const accountNumberTransaction = 9987456386;
 const dormantTransaction = 9870654673;
+const deleteAccountNumber = 1234352387;
 
 const newUserTwo = {
   firstName: 'james',
@@ -174,5 +175,6 @@ export {
   debitTransaction,
   insufficientTransaction,
   dormantAccount,
-  dormantTransaction
+  dormantTransaction,
+  deleteAccountNumber
 };
