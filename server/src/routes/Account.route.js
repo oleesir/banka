@@ -13,4 +13,5 @@ const router = Router();
 router.post('/', checkToken, authorizeRole('client'), validateCreateAccount, asyncErrorHandler(createAccount));
 router.get('/:accountNumber', checkToken, validateGetAccount, asyncErrorHandler(getAccount));
 router.delete('/:accountNumber', checkToken, authorizeRole('staff'), validateGetAccount, asyncErrorHandler(deleteAccount));
+
 export default router;

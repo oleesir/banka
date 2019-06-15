@@ -266,7 +266,7 @@ describe('Account Routes', () => {
   });
 
   describe('Delete Account', () => {
-    it('should allow an Admin staff user to do delete an account', (done) => {
+    it('should allow an admin or staff to delete an account', (done) => {
       request(app)
         .delete(`${URL}/accounts/${deleteAccountNumber}`)
         .set('Authorization', `Bearer ${staffToken}`)
