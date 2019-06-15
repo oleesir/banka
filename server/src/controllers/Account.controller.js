@@ -107,9 +107,7 @@ export default class AccountController {
   static deleteAccount(req, res) {
     const { accountNumber } = req.params;
     const accountToDelete = accounts
-      .findIndex(
-        account => account.accountNumber === parseInt(accountNumber, 10)
-      );
+      .findIndex(account => account.accountNumber === parseInt(accountNumber, 10));
 
     if (accountToDelete === -1) {
       return res.status(400).json({
