@@ -8,7 +8,7 @@ import asyncErrorHandler from '../middlewares/asyncErrorHandler';
 const router = Router();
 
 const { creditTransaction, debitTransaction } = TransactionController;
-const { checkToken,authorizeRole } = Authorization;
+const { checkToken, authorizeRole } = Authorization;
 const { validateCreditTransaction, validateDebitTransaction } = TransactionValidation;
 const { validateGetAccount } = AccountValidation;
 
