@@ -96,7 +96,7 @@ describe('Transaction Route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('You are not authorized to carry out that action');
+          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
           if (err) return done(err);
           done();
         });
@@ -193,7 +193,7 @@ describe('Transaction Route', () => {
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('You are not authorized to carry out that action');
+          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
           if (err) return done(err);
           done();
         });

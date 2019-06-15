@@ -5,12 +5,13 @@ import Authorization from '../middlewares/Authorization';
 import asyncErrorHandler from '../middlewares/asyncErrorHandler';
 
 const { validateCreateAccount, validateGetAccount } = AccountValidation;
-const { checkToken } = Authorization;
-const { createAccount, getAccount } = AccountController;
+const { checkToken, authorizeRole } = Authorization;
+const { createAccount, getAccount, deleteAccount } = AccountController;
 
 const router = Router();
 
-router.post('/', checkToken, validateCreateAccount, asyncErrorHandler(createAccount));
+router.post('/', checkToken, authorizeRole('client'), validateCreateAccount, asyncErrorHandler(createAccount));
 router.get('/:accountNumber', checkToken, validateGetAccount, asyncErrorHandler(getAccount));
+router.delete('/:accountNumber', checkToken, authorizeRole('staff'), validateGetAccount, asyncErrorHandler(deleteAccount));
 
 export default router;

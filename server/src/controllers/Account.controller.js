@@ -1,10 +1,9 @@
-import moment from 'moment';
 import dummyData from '../dummyDb/db';
 import Account from '../models/Account.model';
-import generateNumber from '../helpers/generateNumbers';
 import isEmpty from '../helpers/isEmpty';
 
 const { accounts } = dummyData;
+
 
 /**
  * @class AccountController
@@ -21,39 +20,23 @@ export default class AccountController {
   static createAccount(req, res) {
     const { type } = req.body;
     const {
-      id, firstName, lastName, email, role
+      id: userId, firstName, lastName, email
     } = req.decoded;
 
-    if (role !== 'client') {
-      return res.status(401).json({
-        status: 401,
-        error: 'Only clients can create accounts'
-      });
-    }
-    const newAccount = new Account();
-    const accountsLength = accounts.length;
-    const lastId = accounts[accountsLength - 1].id;
+    const {
+      id, accountNumber, owner, balance, status
+    } = new Account({ userId, type });
 
-    const newId = lastId + 1;
-    newAccount.id = newId;
-    newAccount.accountNumber = generateNumber();
-    newAccount.owner = id;
-    newAccount.createdOn = moment().format();
-    newAccount.type = type;
-    newAccount.status = 'dormant';
-    newAccount.balance = parseFloat(0.00.toFixed(2));
-
-    accounts.push(newAccount);
     const data = {
-      id: newAccount.id,
-      accountNumber: newAccount.accountNumber,
+      id,
+      accountNumber,
       firstName,
       lastName,
-      owner: newAccount.owner,
+      owner,
       email,
-      type: newAccount.type,
-      status: 'dormant',
-      openingBalance: newAccount.balance
+      type,
+      status,
+      openingBalance: balance
     };
 
     return res.status(201).json({
@@ -109,6 +92,35 @@ export default class AccountController {
     return res.status(200).json({
       status: 200,
       data
+    });
+  }
+
+
+  /**
+   *@method deleteAccount
+   *
+   * @param {object} req
+   * @param {object} res
+   *
+   * @return {object} returns status error and message properties
+   */
+  static deleteAccount(req, res) {
+    const { accountNumber } = req.params;
+    const accountToDelete = accounts
+      .findIndex(account => account.accountNumber === parseInt(accountNumber, 10));
+
+    if (accountToDelete === -1) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Account does not exist'
+      });
+    }
+
+    accounts.splice(accountToDelete, 1);
+
+    return res.status(200).json({
+      status: 200,
+      message: 'Account deleted successfully'
     });
   }
 }
