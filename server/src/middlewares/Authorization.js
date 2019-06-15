@@ -45,16 +45,7 @@ export default class Authorization {
    */
   static authorizeRole(role) {
     return (req, res, next) => {
-      const { role: userRole, isAdmin } = req.decoded;
-
-      if (role === 'admin') {
-        if (userRole !== 'staff' || (userRole === 'staff' && !isAdmin)) {
-          return res.status(401).json({
-            status: 401,
-            error: 'You are not authorized to perform this action'
-          });
-        }
-      }
+      const { role: userRole } = req.decoded;
 
       if (role !== userRole) {
         return res.status(401).json({
