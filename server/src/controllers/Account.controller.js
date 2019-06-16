@@ -95,6 +95,50 @@ export default class AccountController {
     });
   }
 
+  /**
+   *@method editAccount
+   *
+   * @param {object} req
+   * @param {object} res
+   *
+   * @return {object} returns status error and message properties
+   */
+  static editAccount(req, res) {
+    const { accountNumber } = req.params;
+    const { status } = req.body;
+
+    const accountToEdit = accounts
+      .find(account => account.accountNumber === parseInt(accountNumber, 10));
+
+    if (!accountToEdit) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Account does not exist'
+      });
+    }
+
+    const { status: checkStatus, accountNumber: userAccountNumber } = accountToEdit;
+    if (checkStatus === status) {
+      return res.status(409).json({
+        status: 409,
+        error: `Account is already ${status}`
+      });
+    }
+
+    accountToEdit.status = status;
+
+    const data = {
+      accountNumber: userAccountNumber,
+      owner: accountToEdit.owner,
+      status: accountToEdit.status
+    };
+
+    return res.status(200).json({
+      status: 200,
+      data,
+      message: 'Account updated successfully'
+    });
+  }
 
   /**
    *@method deleteAccount

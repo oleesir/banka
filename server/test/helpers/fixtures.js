@@ -110,6 +110,18 @@ const dormantAccount = {
   amount: 5000
 };
 
+const editStatus = {
+  status: 'dormant'
+};
+
+const emptyStatus = {
+  status: ''
+};
+
+const invalidStatus = {
+  status: 'irkfklm'
+};
+
 
 const emptyFirstName = { ...newUser, firstName: '' };
 const emptyLastName = { ...newUser, lastName: '' };
@@ -176,5 +188,8 @@ export {
   insufficientTransaction,
   dormantAccount,
   dormantTransaction,
-  deleteAccountNumber
+  deleteAccountNumber,
+  editStatus,
+  emptyStatus,
+  invalidStatus
 };

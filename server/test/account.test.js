@@ -17,6 +17,10 @@ import {
   lessThanTenDigits,
   wrongAccountNumber,
   deleteAccountNumber,
+  userAccountNumber,
+  editStatus,
+  emptyStatus,
+  invalidStatus
 } from './helpers/fixtures';
 
 const URL = '/api/v1';
@@ -254,6 +258,134 @@ describe('Account Routes', () => {
       request(app)
         .get(`${URL}/accounts/${nonExistingAccountNumber}`)
         .set('Authorization', `Bearer ${clientToken}`)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(404);
+          expect(res.body).to.have.property('error').to.eql('Account does not exist');
+          expect(res.status).to.equal(404);
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('Edit Account', () => {
+    it('should allow a staff to edit an account status', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(editStatus)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(200);
+          expect(res.body.data).to.have.property('accountNumber').eql(userAccountNumber);
+          expect(res.status).to.equal(200);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should not edit an account status by a non-staff', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .send(editStatus)
+        .expect(401)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(401);
+          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
+          expect(res.status).to.equal(401);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should not edit an account status if the account number is more than 10 digits', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${invalidAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(editStatus)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Account number must be 10 digits');
+          expect(res.status).to.equal(400);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should not edit an account status if a status is not provided', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(emptyStatus)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Status can only be active or dormant');
+          expect(res.status).to.equal(400);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should not edit an account status if an invalid status is provided', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(invalidStatus)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Status can only be active or dormant');
+          expect(res.status).to.equal(400);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should not deactivate an account that already deactived', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(editStatus)
+        .expect(409)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(409);
+          expect(res.body).to.have.property('error').to.eql('Account is already dormant');
+          expect(res.status).to.equal(409);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should return an error for an invalid account number', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${doesNotContainDigits}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(editStatus)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Account number can only contain digits');
+          expect(res.status).to.equal(400);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+
+    it('should return an error message when an account that does not exist is requested', (done) => {
+      request(app)
+        .patch(`${URL}/accounts/${nonExistingAccountNumber}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .send(editStatus)
         .expect(404)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(404);
