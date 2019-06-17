@@ -95,8 +95,36 @@ export default class AccountController {
     });
   }
 
+
   /**
-   *@method editAccount
+ * @method getAllAccounts
+ *
+ * @param {Object} req
+ * @param {Object} res
+ *
+ * @returns {object} status code and data message
+ */
+  static getAllAccounts(req, res) {
+    const { role, id: userId } = req.decoded;
+
+
+    if (role === 'staff') {
+      return res.status(200).json({
+        status: 200,
+        data: accounts
+      });
+    }
+
+    const userAccounts = accounts.filter(account => account.owner === userId);
+
+    return res.status(200).json({
+      status: 200,
+      data: userAccounts
+    });
+  }
+
+  /**
+   * @method editAccount
    *
    * @param {object} req
    * @param {object} res

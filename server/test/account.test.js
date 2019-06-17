@@ -136,8 +136,9 @@ describe('Account Routes', () => {
     });
   });
 
+
   describe('Get Account', () => {
-    let userAccountNumber;
+    let clientAccountNumber;
 
     before((done) => {
       request(app)
@@ -146,7 +147,7 @@ describe('Account Routes', () => {
         .set('Authorization', `Bearer ${clientToken}`)
         .end((err, res) => {
           const { accountNumber } = res.body.data;
-          userAccountNumber = accountNumber;
+          clientAccountNumber = accountNumber;
           if (err) return done(err);
           done();
         });
@@ -155,12 +156,12 @@ describe('Account Routes', () => {
 
     it('should get an account for client', (done) => {
       request(app)
-        .get(`${URL}/accounts/${userAccountNumber}`)
+        .get(`${URL}/accounts/${clientAccountNumber}`)
         .set('Authorization', `Bearer ${clientToken}`)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(200);
-          expect(res.body.data).to.have.property('accountNumber').eql(userAccountNumber);
+          expect(res.body.data).to.have.property('accountNumber').eql(clientAccountNumber);
           expect(res.status).to.equal(200);
           if (err) return done(err);
           done();
@@ -239,21 +240,6 @@ describe('Account Routes', () => {
     });
 
 
-    it('should not get an account if the account number is empty', (done) => {
-      request(app)
-        .get(`${URL}/accounts/${emptyAccountNumber}`)
-        .set('Authorization', `Bearer ${clientToken}`)
-        .expect(404)
-        .end((err, res) => {
-          expect(res.body).to.have.property('status').eql(404);
-          expect(res.body).to.have.property('error').to.eql('Not found');
-          expect(res.status).to.equal(404);
-          if (err) return done(err);
-          done();
-        });
-    });
-
-
     it('should not get a non-existing account', (done) => {
       request(app)
         .get(`${URL}/accounts/${nonExistingAccountNumber}`)
@@ -263,6 +249,34 @@ describe('Account Routes', () => {
           expect(res.body).to.have.property('status').eql(404);
           expect(res.body).to.have.property('error').to.eql('Account does not exist');
           expect(res.status).to.equal(404);
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('Get all Accounts', () => {
+    it('should get all accounts for authorized users', (done) => {
+      request(app)
+        .get(`${URL}/accounts`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(200);
+          expect(res.status).to.equal(200);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should get all accounts owned by an authorized users', (done) => {
+      request(app)
+        .get(`${URL}/accounts`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(200);
+          expect(res.status).to.equal(200);
           if (err) return done(err);
           done();
         });
