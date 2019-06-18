@@ -269,7 +269,7 @@ describe('Account Routes', () => {
         });
     });
 
-    it('should get all accounts owned by an authorized users', (done) => {
+    it('should get all accounts owned by an authorized user', (done) => {
       request(app)
         .get(`${URL}/accounts`)
         .set('Authorization', `Bearer ${clientToken}`)

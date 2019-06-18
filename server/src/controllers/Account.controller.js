@@ -95,18 +95,16 @@ export default class AccountController {
     });
   }
 
-
   /**
- * @method getAllAccounts
- *
- * @param {Object} req
- * @param {Object} res
- *
- * @returns {object} status code and data message
- */
+   * @method getAllAccounts
+   *
+   * @param {object} req
+   * @param {object} res
+   *
+   * @returns {object} status code and data message
+   */
   static getAllAccounts(req, res) {
     const { role, id: userId } = req.decoded;
-
 
     if (role === 'staff') {
       return res.status(200).json({
