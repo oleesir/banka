@@ -41,13 +41,13 @@ coming soon
 
 ## Supporting packages
 #### Linter
-  * [ESLint](https://eslint.org/)
+* [ESLint](https://eslint.org/)
 
 #### Compiler
 * [Babel](https://babeljs.io/)
   
 #### Test Tools
-  * [Mocha](https://mochajs.org/) - JavaScript Test Framework for API Tests (Backend)
+* [Mocha](https://mochajs.org/) - JavaScript Test Framework for API Tests (Backend)
 * [Chai](http://chaijs.com/) - TDD/BDD Assertion Library for Node
 * [Supertest](https://www.npmjs.com/package/supertest) - Super-agent driven
   library for testing node.js HTTP servers
@@ -85,7 +85,7 @@ $ npm run test
 **Install nyc globally to generate and view coverage reports via the command line**
 
 ```bash
-npm install -g nyc
+npm install --save-dev nyc
 ```
 
 **Using Postman**
