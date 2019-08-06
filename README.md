@@ -21,7 +21,7 @@ A banking application that helps users perform banking transactions.
 
 ## Hosted App
 
-coming soon
+https://wayfarer-appy.herokuapp.com
 
 ## Pivotal Tracker Board
 
@@ -54,15 +54,19 @@ coming soon
 
 ## Application Features
 * User Registration
-* Bank Account Creation
-* Bank deposits and withdrawals
-* Bank account management
+* User can book a trip
+* User can view all trips
+* Admin can create a trip
+* Admin can cancel a trip
+* Admin can view all trips and bookings
+* Admin can get a list of filtered trips based on origin and destination.
+
 
 
 ## Getting Started
 ### Installation
 * Install [NodeJS](https://nodejs.org/) and [PostgreSQL](https://www.postgresql.org/) on your computer
-* Clone this repository using `git@github.com:oleesir/banka.git`
+* Clone this repository using `git@github.com:oleesir/wayfarer-api.git`
 * Use the `.env.example` file to setup your environmental variables and rename the file to `.env`
 * Run `npm install` to install all dependencies
 * Run `npm run build` to build the project
@@ -76,7 +80,7 @@ Dependencies to enable them work are included in the `package.json` file. To run
 
 ```bash
 # Enter the project's directory
-$ cd banka/
+$ cd wayfarer/
 
 # To run the available unit tests
 $ npm run test
@@ -95,16 +99,12 @@ If you have Postman installed, you can test routes listed below. An example resp
 ```bash
 # on successful request to the sign in route /api/v1/auth/signin
 {
-  "status": 200,
-  "data": [
-    {
+  "status": "success",
+  "data": {
       "token": "jbhfuhbfhrb_r.iufnr3uinrufrf",
-      "id", 8,
-      "firstName": "olisa",
-      "lastName": "Emodi",
-      "email": "oleesir@gmail.com"
-    }
-  ]
+      ​“user_id”​:​Integer,​ 
+ ​     “is_admin”:Boolean​ 
+    } 
 }
 ```
 
