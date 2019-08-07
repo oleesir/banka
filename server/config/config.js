@@ -17,9 +17,9 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    username: DB_USER || 'olive',
+    username: DB_USER || 'oleesir',
     password: DB_PASSWORD || '',
-    database: DB_NAME_TEST || 'banka-test',
+    database: DB_NAME_TEST || 'banka_test',
     host: DB_HOST || '127.0.0.1',
     dialect: 'postgres'
   },
