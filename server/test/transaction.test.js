@@ -1,3 +1,4 @@
+
 import { expect } from 'chai';
 import request from 'supertest';
 import app from '../src/app';
@@ -5,6 +6,7 @@ import {
   staffToken,
   creditTransaction,
   userAccountNumber,
+  dormantAccountNumber,
   emptyAmount,
   accountNumberTransaction,
   negativeInput,
@@ -14,7 +16,8 @@ import {
   debitTransaction,
   insufficientTransaction,
   dormantAccount,
-  dormantTransaction
+  dormantTransaction,
+  activeAccountNumber
 } from './helpers/fixtures';
 
 const URL = '/api/v1';
@@ -23,7 +26,7 @@ describe('Transaction Route', () => {
   describe('Credit Transaction', () => {
     it('should let a cashier credit an active account', (done) => {
       request(app)
-        .post(`${URL}/transactions/${userAccountNumber}/credit`)
+        .post(`${URL}/transactions/${activeAccountNumber}/credit`)
         .send(creditTransaction)
         .set('Authorization', `Bearer ${staffToken}`)
         .expect(200)
@@ -122,7 +125,7 @@ describe('Transaction Route', () => {
   describe('Debit Transaction', () => {
     it('should let a cashier debit an active account', (done) => {
       request(app)
-        .post(`${URL}/transactions/${userAccountNumber}/debit`)
+        .post(`${URL}/transactions/${activeAccountNumber}/debit`)
         .send(debitTransaction)
         .set('Authorization', `Bearer ${staffToken}`)
         .expect(200)
@@ -218,7 +221,7 @@ describe('Transaction Route', () => {
 
     it('should not let a cashier debit an account with insufficient funds', (done) => {
       request(app)
-        .post(`${URL}/transactions/${userAccountNumber}/debit`)
+        .post(`${URL}/transactions/${activeAccountNumber}/debit`)
         .send(insufficientTransaction)
         .set('Authorization', `Bearer ${staffToken}`)
         .expect(400)
@@ -234,8 +237,8 @@ describe('Transaction Route', () => {
 
     it('should not let a cashier debit a dormant account', (done) => {
       request(app)
-        .post(`${URL}/transactions/${dormantTransaction}/debit`)
-        .send(dormantAccount)
+        .post(`${URL}/transactions/${dormantAccountNumber}/debit`)
+        .send(debitTransaction)
         .set('Authorization', `Bearer ${staffToken}`)
         .expect(400)
         .end((err, res) => {

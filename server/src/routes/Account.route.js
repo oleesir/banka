@@ -24,7 +24,7 @@ const router = Router();
 
 router.post('/', checkToken, authorizeRole('client'), validateCreateAccount, asyncErrorHandler(createAccount));
 router.get('/:accountNumber', checkToken, validateGetAccount, asyncErrorHandler(getAccount));
-router.delete('/:accountNumber', checkToken, authorizeRole('staff'), validateGetAccount, asyncErrorHandler(deleteAccount));
+router.delete('/:accountNumber', checkToken, authorizeRole('admin'), validateGetAccount, asyncErrorHandler(deleteAccount));
 router.patch('/:accountNumber', checkToken, authorizeRole('staff'), validateEditAccount, asyncErrorHandler(editAccount));
 router.get('/', checkToken, asyncErrorHandler(getAllAccounts));
 

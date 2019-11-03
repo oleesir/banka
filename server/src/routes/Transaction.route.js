@@ -16,7 +16,6 @@ router
   . post(
     '/:accountNumber/credit',
     checkToken,
-    authorizeRole('staff'),
     validateGetAccount,
     validateCreditTransaction,
     asyncErrorHandler(creditTransaction)

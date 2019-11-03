@@ -1,9 +1,9 @@
-import moment from 'moment';
-import dummyData from '../dummyDb/db';
-import Transaction from '../models/Transaction.model';
+import Model from '../db/index';
 import formatAmount from '../helpers/formatAmount';
 
-const { accounts, transactions } = dummyData;
+const transactions = new Model('transactions');
+const accounts = new Model('accounts');
+// const users = new Model('users');
 /**
  * @class TransactionController
  */
@@ -16,14 +16,25 @@ export default class TransactionController {
    *
    * @returns {object} status code, data and message properties
    */
-  static creditTransaction(req, res) {
+  static async creditTransaction(req, res) {
     const { accountNumber } = req.params;
     const { amount } = req.body;
-    const { role, id } = req.decoded;
 
+    const {
+      role, id: cashierId, firstName, lastName,
+    } = req.decoded;
 
-    const accountToCredit = accounts
-      .find(account => account.accountNumber === parseInt(accountNumber, 10));
+    if (role === 'client') {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not authorized to perform this action'
+      });
+    }
+
+    const [accountToCredit] = await accounts.select(
+      ['*'],
+      [`account_number=${parseInt(accountNumber, 10)}`]
+    );
 
     if (!accountToCredit) {
       return res.status(404).json({
@@ -32,36 +43,69 @@ export default class TransactionController {
       });
     }
 
-    const { balance, accountNumber: userAccountNumber } = accountToCredit;
+    const {
+      balance,
+      status,
+      ownerId,
+      accountNumber: userAccountNumber
+    } = accountToCredit;
 
-    const newTransaction = new Transaction();
-    const transactionsLength = transactions.length;
-    const lastId = transactions[transactionsLength - 1].id;
-    const newId = lastId + 1;
+    if (cashierId === ownerId) {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to carry out that action'
+      });
+    }
 
-    newTransaction.id = newId;
-    newTransaction.createdOn = moment().format();
-    newTransaction.type = 'credit';
-    newTransaction.accountNumber = userAccountNumber;
-    newTransaction.cashier = id;
-    newTransaction.amount = formatAmount(amount);
-    newTransaction.oldBalance = formatAmount(balance);
-    newTransaction.newBalance = formatAmount(amount) + formatAmount(balance);
+    if (status === 'dormant') {
+      return res.status(400).json({
+        status: 400,
+        error:
+          'Account is dormant, please activate it to carry out a transaction'
+      });
+    }
 
-    // update account
-    accountToCredit.balance = newTransaction.newBalance;
-    accountToCredit.status = 'active';
+    const newBalance = formatAmount(balance) + formatAmount(amount);
 
-    transactions.push(newTransaction);
+    const [newTransaction] = await transactions.create(
+      [
+        'type',
+        'account_number',
+        'owner_id',
+        'cashier_id',
+        'cashier_name',
+        'amount',
+        'old_balance',
+        'new_balance'
+      ],
+      [
+        `'credit',
+        ${userAccountNumber},
+        ${ownerId},
+        ${cashierId},
+        '${firstName} ${lastName}',
+        ${amount},
+        ${balance},
+        ${newBalance}`
+      ]
+    );
+
+
+    // update to new balance
+    const [updatedAccount] = await accounts.update([`balance =${newTransaction.newBalance}`], [
+      `account_number = ${parseInt(accountNumber, 10)}`
+    ]);
+
 
     const data = {
       id: newTransaction.id,
       accountNumber: newTransaction.accountNumber,
-      amount: newTransaction.amount,
-      cashier: newTransaction.cashier,
+      amount: formatAmount(newTransaction.amount),
+      cashierId: newTransaction.cashierId,
+      cashier: newTransaction.cashierName,
       type: newTransaction.type,
-      status: accountToCredit.status,
-      accountBalance: accountToCredit.balance
+      oldBalance: formatAmount(newTransaction.oldBalance),
+      accountBalance: formatAmount(updatedAccount.balance)
     };
 
     return res.status(200).json({
@@ -79,14 +123,22 @@ export default class TransactionController {
    *
    * @returns {object} status code, data and message properties
    */
-  static debitTransaction(req, res) {
+  static async debitTransaction(req, res) {
     const { accountNumber } = req.params;
     const { amount } = req.body;
-    const { role, id } = req.decoded;
+    const {
+      role, id: cashierId, firstName, lastName,
+    } = req.decoded;
     const minimumBalance = 500;
 
-    const accountToDebit = accounts
-      .find(account => account.accountNumber === parseInt(accountNumber, 10));
+    if (role !== 'staff') {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to carry out that action'
+      });
+    }
+
+    const [accountToDebit] = await accounts.select(['*'], `account_number=${parseInt(accountNumber, 10)}`);
 
     if (!accountToDebit) {
       return res.status(404).json({
@@ -95,7 +147,19 @@ export default class TransactionController {
       });
     }
 
-    const { accountNumber: userAccountNumber, balance, status } = accountToDebit;
+    const {
+      accountNumber: userAccountNumber,
+      balance,
+      status,
+      ownerId
+    } = accountToDebit;
+
+    if (cashierId === ownerId) {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to carry out that action'
+      });
+    }
 
     if (status === 'dormant') {
       return res.status(400).json({
@@ -112,34 +176,44 @@ export default class TransactionController {
       });
     }
 
-    const newTransaction = new Transaction();
-    const transactionsLength = transactions.length;
-    const lastId = transactions[transactionsLength - 1].id;
-    const newId = lastId + 1;
+    const newBalance = formatAmount(balance) - formatAmount(amount);
 
-
-    newTransaction.id = newId;
-    newTransaction.createdOn = moment().format();
-    newTransaction.type = 'debit';
-    newTransaction.accountNumber = userAccountNumber;
-    newTransaction.cashier = id;
-    newTransaction.amount = formatAmount(amount);
-    newTransaction.oldBalance = formatAmount(balance);
-    newTransaction.newBalance = formatAmount(balance) - formatAmount(amount);
+    const [newTransaction] = await transactions.create(
+      ['type',
+        'account_number',
+        'owner_id',
+        'cashier_id',
+        'cashier_name',
+        'amount',
+        'old_balance',
+        'new_balance'],
+      [
+        `'debit',
+        ${userAccountNumber},
+        ${ownerId},
+        ${cashierId},
+        '${firstName} ${lastName}',
+        ${amount},
+        ${balance},
+        ${newBalance}
+        `
+      ]
+    );
 
     // update balance
-    accountToDebit.balance = newTransaction.newBalance;
+    const [updatedAccount] = await accounts.update([`balance =${newTransaction.newBalance}`], [
+      `account_number = ${parseInt(accountNumber, 10)}`
+    ]);
 
-    transactions.push(newTransaction);
 
     const data = {
       id: newTransaction.id,
       accountNumber: newTransaction.accountNumber,
-      amount: newTransaction.amount,
-      cashier: newTransaction.cashier,
+      amount: formatAmount(newTransaction.amount),
+      cashierId: newTransaction.cashierId,
+      cashierName: newTransaction.cashierName,
       type: newTransaction.type,
-      status: accountToDebit.status,
-      accountBalance: accountToDebit.balance
+      accountBalance: formatAmount(updatedAccount.balance)
     };
 
     return res.status(200).json({
