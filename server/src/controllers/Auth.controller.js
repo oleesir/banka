@@ -1,14 +1,12 @@
-
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import moment from 'moment';
-import User from '../models/User.model';
-import dummyData from '../dummyDb/db';
+import Model from '../db/index';
 import Encryption from '../helpers/Encryption';
 
 dotenv.config();
 
-const { users } = dummyData;
+const users = new Model('users');
+
 const { encryptPassword, comparePassword } = Encryption;
 
 /**
@@ -24,48 +22,41 @@ export default class AuthController {
    *
    * @returns {object} status code, data and message properties
    */
-  static signup(req, res) {
+  static async signup(req, res) {
     const {
       firstName, lastName, email, password
     } = req.body;
 
+    const existingUser = await users.select(['email'], [`email='${email}'`]);
 
-    const userExists = users.some(user => user.email === email);
-    const hashedPassword = encryptPassword(password);
-
-    if (userExists) {
+    if (existingUser.length) {
       return res.status(409).json({
         status: 409,
         error: 'User already exists'
       });
     }
 
-    const newUser = new User();
-    const usersLength = users.length;
-    const lastId = users[usersLength - 1].id;
-    const newId = lastId + 1;
+    const hashedPassword = encryptPassword(password);
 
-    newUser.id = newId;
-    newUser.firstName = firstName.trim();
-    newUser.lastName = lastName.trim();
-    newUser.email = email.trim();
-    newUser.password = hashedPassword;
-    newUser.role = 'client';
-    newUser.createdAt = moment().format('LLLL');
+    const [newUser] = await users.create(['first_name', 'last_name', 'email', 'password', 'role'],
+      [`'${firstName}','${lastName}','${email}','${hashedPassword}','client'`]);
 
-    users.push(newUser);
-
-    const payload = { id: newUser.id, email: newUser.email };
-    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
-    const data = {
-      token,
+    const payload = {
       id: newUser.id,
       firstName: newUser.firstName,
       lastName: newUser.lastName,
       email: newUser.email,
-      role: newUser.role,
-      createdAt: newUser.createdAt
+      role: newUser.role
     };
+    const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
+
+    delete newUser.password;
+
+    const data = {
+      token,
+      ...newUser
+    };
+
     return res.status(201).json({
       status: 201,
       data,
@@ -81,50 +72,56 @@ export default class AuthController {
    *
    * @returns {object}  status code, data and message properties
    */
-  static signin(req, res) {
+  static async signin(req, res) {
     const { email, password } = req.body;
 
-    for (let i = 0; i < users.length; i++) {
-      if (email === users[i].email) {
-        const verifyPassword = comparePassword(password, users[i].password);
+    const [findUser] = await users.select(['*'], `email='${email}'`);
 
-        if (!verifyPassword) {
-          return res.status(401).json({
-            status: 401,
-            error: 'Email or password is incorrect'
-          });
-        }
+    if (!findUser) {
+      return res.status(401).json({
+        status: 401,
+        error: 'Email or password is incorrect'
+      });
+    }
 
-        const {
-          id, firstName, lastName, role, isAdmin
-        } = users[i];
+    if (findUser) {
+      const {
+        id,
+        firstName,
+        lastName,
+        role
+      } = findUser;
 
-        const payload = {
-          id,
-          firstName,
-          lastName,
-          email,
-          role,
-          isAdmin
-        };
 
-        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
+      const verifyUserPassword = comparePassword(password, findUser.password);
 
-        const data = {
-          token,
-          id,
-          firstName,
-          lastName,
-          email,
-          role,
-          isAdmin
-        };
-        return res.status(200).json({
-          status: 200,
-          data,
-          message: 'Login successful'
+      if (!verifyUserPassword) {
+        return res.status(401).json({
+          status: 401,
+          error: 'Email or password is incorrect'
         });
       }
+
+      const payload = {
+        id,
+        firstName,
+        lastName,
+        email,
+        role
+      };
+
+      const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
+
+      const data = {
+        ...payload,
+        token
+      };
+
+      return res.status(200).json({
+        status: 200,
+        data,
+        message: 'Login successful'
+      });
     }
     return res.status(401).json({
       status: 401,

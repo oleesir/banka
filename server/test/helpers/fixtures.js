@@ -7,7 +7,7 @@ const newUser = {
   password: 'ryangosl'
 };
 
-const userAccountNumber = 3452783652;
+const userAccountNumber = 3094781960;
 const invalidAccountNumber = 34564765298;
 const doesNotContainDigits = '35278365u4';
 const emptyAccountNumber = '';
@@ -16,7 +16,9 @@ const lessThanTenDigits = 2345632;
 const wrongAccountNumber = 3452783652;
 const accountNumberTransaction = 9987456386;
 const dormantTransaction = 9870654673;
+const dormantAccountNumber = 8888888888;
 const deleteAccountNumber = 1234352387;
+const activeAccountNumber = 1234567890;
 
 const newUserTwo = {
   firstName: 'james',
@@ -30,46 +32,50 @@ const authUser = {
   password: 'ryangosl'
 };
 
-const adminPayload = {
-  id: 2,
+const staffPayload = {
+  id: 4,
   email: 'amaka@gmail.com',
   firstName: 'Amaka',
   lastName: 'Emodi',
   password: 'secret',
-  type: 'staff',
-  isAdmin: true,
+  role: 'staff'
 };
 
 const clientPayload = {
-  id: 3,
-  email: 'ivy@gmail.com',
-  firstName: 'Iveren',
-  lastName: 'Shaguy',
+  id: 5,
+  email: 'john@gmail.com',
+  firstName: 'John',
+  lastName: 'Doe',
   password: 'secret',
-  role: 'client',
+  role: 'client'
 };
 
-const staffPayload = {
+const clientPayloadTwo = {
+  id: 6,
+  email: 'jaga@gmail.com',
+  firstName: 'Jaga',
+  lastName: 'White',
+  password: 'secret',
+  role: 'client'
+};
+
+const adminPayload = {
   id: 1,
   email: 'olisa@gmail.com',
   firstName: 'Olisa',
   lastName: 'Emodi',
   password: 'secret',
-  role: 'staff',
-  isAdmin: false
+  role: 'admin'
 };
 
 
 const clientToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
+const clientTokenTwo = jwt.sign(clientPayloadTwo, process.env.SECRET_KEY, { expiresIn: '1day' });
 const staffToken = jwt.sign(staffPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const adminToken = jwt.sign(adminPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const expiredToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1' });
 const fakeToken = 'uh2ygy34758357t.njidvfhvbrubbjb';
 
-const staffUser = {
-  email: 'amaka@gmail.com',
-  password: 'secret'
-};
 
 const emptyAuthUser = {
   email: '',
@@ -102,16 +108,15 @@ const invalidCharacters = {
 };
 
 const insufficientTransaction = {
-  amount: 90000000
+  amount: 900000000
 };
 
 const dormantAccount = {
-  status: 'dormant',
-  amount: 5000
+  status: 'dormant'
 };
 
 const editStatus = {
-  status: 'dormant'
+  status: 'active'
 };
 
 const emptyStatus = {
@@ -139,11 +144,14 @@ const wrongUserAuth = { ...authUser, email: 'ryan@gmail.com', password: 'ryangor
 const wrongUserAuthEmail = { ...authUser, email: 'kennygray@gmail.com', password: 'ryangosl' };
 const newAccount = { type: 'savings' };
 const newAccountTwo = { type: 'current' };
+const activeAccount = { type: 'savings', status: 'active' };
 const emptyType = { type: '' };
 const invalidNewAccount = { type: 'credit' };
 
 export {
   newUser,
+  clientTokenTwo,
+  activeAccount,
   emptyFirstName,
   emptyLastName,
   emptyUser,
@@ -164,8 +172,8 @@ export {
   newAccount,
   emptyType,
   invalidNewAccount,
-  staffUser,
   newUserTwo,
+  dormantAccountNumber,
   newAccountTwo,
   staffToken,
   clientToken,
@@ -175,6 +183,7 @@ export {
   userAccountNumber,
   invalidAccountNumber,
   emptyAccountNumber,
+  activeAccountNumber,
   doesNotContainDigits,
   nonExistingAccountNumber,
   lessThanTenDigits,

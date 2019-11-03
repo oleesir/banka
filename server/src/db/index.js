@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import getConfig from './config';
+import snakeToCamelCase from '../helpers/snakeToCamelCase';
 
 
 dotenv.config();
@@ -46,7 +47,7 @@ export default class Model {
 
     try {
       const result = await this.pool.query(query);
-      return result.rows;
+      return Model.mapResultToCamelCase(result.rows);
     } catch (err) {
       console.log(query, err.message);
     }
@@ -61,12 +62,12 @@ export default class Model {
    * @returns {query} query
    */
   async create(attributes, constraints) {
-    const query = `INSERT INTO ${this.table}({${attributes}) VALUES (${constraints}) RETURNING *`;
+    const query = `INSERT INTO ${this.table}(${attributes}) VALUES(${constraints}) RETURNING *`;
     console.log(query);
 
     try {
       const result = await this.pool.query(query);
-      return result.rows;
+      return Model.mapResultToCamelCase(result.rows);
     } catch (err) {
       console.log(query, err.message);
     }
@@ -87,7 +88,7 @@ export default class Model {
 
     try {
       const result = await this.pool.query(query);
-      return result.rows;
+      return Model.mapResultToCamelCase(result.rows);
     } catch (err) {
       console.log(query, err.message);
     }
@@ -107,7 +108,7 @@ export default class Model {
 
     try {
       const result = await this.pool.query(query);
-      return result.rows;
+      return Model.mapResultToCamelCase(result.rows);
     } catch (err) {
       console.log(query, err.message);
     }
@@ -127,9 +128,26 @@ export default class Model {
 
     try {
       const result = await this.pool.query(query);
-      return result.rows;
+      return Model.mapResultToCamelCase(result.rows);
     } catch (err) {
       console.log(query, err.message);
     }
+  }
+
+  /**
+   * @param {array} result
+   * @returns {array} convertedAttributed
+   */
+  static mapResultToCamelCase(result) {
+    return result.map((row) => {
+      const rowAEntries = Object.entries(row);
+      const convertedRow = {};
+
+      rowAEntries.forEach(([key, value]) => {
+        convertedRow[snakeToCamelCase(key)] = value;
+      });
+
+      return convertedRow;
+    });
   }
 }

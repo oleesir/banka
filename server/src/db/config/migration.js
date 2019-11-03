@@ -6,6 +6,7 @@ export const dropTables = `
 
 export const dropTypes = `
     DROP TYPE IF EXISTS ACCOUNT_STATUS;
+
 `;
 
 export const createTypes = `
@@ -15,39 +16,39 @@ export const createTypes = `
 export const createTables = `
     CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
-        firstName VARCHAR NOT NULL,
-        lastName VARCHAR NOT NULL,
+        first_name VARCHAR NOT NULL,
+        last_name VARCHAR NOT NULL,
         email VARCHAR UNIQUE NOT NULL,
         password TEXT NOT NULL,
-        isAdmin BOOLEAN NOT NULL,
+        role VARCHAR NOT NULL,
         created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
 
     CREATE TABLE IF NOT EXISTS accounts(
         id SERIAL PRIMARY KEY,
-        accountNumber BIGINT NOT NULL,
-        ownerId INT NOT NULL,
-        ownerName VARCHAR NOT NULL,
+        account_number BIGINT NOT NULL,
+        owner_id INT NOT NULL,
+        owner_name VARCHAR NOT NULL,
         type VARCHAR NOT NULL,
-        status ACCOUNT_STATUS NOT NULL DEFAULT 'active',
+        status ACCOUNT_STATUS NOT NULL DEFAULT 'dormant',
         balance NUMERIC NOT NULL,
-        ownerEmail TEXT NOT NULL,
-        FOREIGN KEY(ownerId) REFERENCES users(id) ON DELETE SET NULL,
+        owner_email TEXT NOT NULL,
+        FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE SET NULL,
         created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
 
     CREATE TABLE IF NOT EXISTS transactions(
         id SERIAL PRIMARY KEY,
         type VARCHAR NOT NULL,
-        accountNumber BIGINT NOT NULL,
-        ownerId INT NOT NULL,
-        cashierId INT NOT NULL,
-        cashierName VARCHAR NOT NULL,
+        account_number BIGINT NOT NULL,
+        owner_id INT NOT NULL,
+        cashier_id INT NOT NULL,
+        cashier_name VARCHAR NOT NULL,
         amount NUMERIC NOT NULL,
-        oldBalance NUMERIC NOT NULL,
-        newBalance NUMERIC NOT NULL,
-        FOREIGN KEY(ownerId) REFERENCES users(id) ON DELETE SET NULL,
-        FOREIGN KEY(cashierId) REFERENCES users(id) ON DELETE SET NULL,
+        old_balance NUMERIC NOT NULL,
+        new_balance NUMERIC NOT NULL,
+        FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE SET NULL,
+        FOREIGN KEY(cashier_id) REFERENCES users(id) ON DELETE SET NULL,
         created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);    
 `;

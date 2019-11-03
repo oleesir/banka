@@ -1,8 +1,10 @@
+import '@babel/polyfill';
 import { expect } from 'chai';
 import request from 'supertest';
 import app from '../src/app';
 import {
   clientToken,
+  clientTokenTwo,
   newAccount,
   emptyType,
   invalidNewAccount,
@@ -10,8 +12,10 @@ import {
   staffToken,
   expiredToken,
   fakeToken,
+  adminToken,
   doesNotContainDigits,
   invalidAccountNumber,
+  dormantAccountNumber,
   emptyAccountNumber,
   nonExistingAccountNumber,
   lessThanTenDigits,
@@ -20,7 +24,8 @@ import {
   userAccountNumber,
   editStatus,
   emptyStatus,
-  invalidStatus
+  invalidStatus,
+  dormantAccount
 } from './helpers/fixtures';
 
 const URL = '/api/v1';
@@ -35,8 +40,8 @@ describe('Account Routes', () => {
         .expect(201)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(201);
-          expect(res.body.data).to.have.property('id').eql(4);
-          expect(res.body.data).to.have.property('openingBalance').eql(0.00);
+          expect(res.body.data).to.have.property('id').eql(6);
+          expect(res.body.data).to.have.property('balance').eql(0.0);
           expect(res.body.data).to.have.property('status').eql('dormant');
           expect(res.body).to.have.nested.property('data.accountNumber');
           expect(res.body).to.have.property('message').eql('Account created');
@@ -49,7 +54,7 @@ describe('Account Routes', () => {
       request(app)
         .post(`${URL}/accounts`)
         .send(emptyType)
-        .set('Authorization', `Bearer ${clientToken}`)
+        .set('Authorization', `Bearer ${clientTokenTwo}`)
         .expect(400)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(400);
@@ -176,8 +181,7 @@ describe('Account Routes', () => {
         .expect(404)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(404);
-          expect(res.body).to.have.property('error').to.eql('Account does not exist');
-          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('error').to.eql('Account does not exists');
           if (err) return done(err);
           done();
         });
@@ -185,12 +189,12 @@ describe('Account Routes', () => {
 
     it('should get any account for staff', (done) => {
       request(app)
-        .get(`${URL}/accounts/${userAccountNumber}`)
+        .get(`${URL}/accounts/${clientAccountNumber}`)
         .set('Authorization', `Bearer ${staffToken}`)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(200);
-          expect(res.body.data).to.have.property('accountNumber').eql(userAccountNumber);
+          expect(res.body.data).to.have.property('accountNumber').eql(clientAccountNumber);
           expect(res.status).to.equal(200);
           if (err) return done(err);
           done();
@@ -247,7 +251,7 @@ describe('Account Routes', () => {
         .expect(404)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(404);
-          expect(res.body).to.have.property('error').to.eql('Account does not exist');
+          expect(res.body).to.have.property('error').to.eql('Account does not exists');
           expect(res.status).to.equal(404);
           if (err) return done(err);
           done();
@@ -284,15 +288,30 @@ describe('Account Routes', () => {
   });
 
   describe('Edit Account', () => {
+    let clientAccountNumber;
+
+    before((done) => {
+      request(app)
+        .post(`${URL}/accounts`)
+        .send(newAccount)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .end((err, res) => {
+          const { accountNumber } = res.body.data;
+          clientAccountNumber = accountNumber;
+          if (err) return done(err);
+          done();
+        });
+    });
+
     it('should allow a staff to edit an account status', (done) => {
       request(app)
-        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .patch(`${URL}/accounts/${clientAccountNumber}`)
         .set('Authorization', `Bearer ${staffToken}`)
         .send(editStatus)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(200);
-          expect(res.body.data).to.have.property('accountNumber').eql(userAccountNumber);
+          expect(res.body.data).to.have.property('accountNumber').eql(clientAccountNumber);
           expect(res.status).to.equal(200);
           if (err) return done(err);
           done();
@@ -365,14 +384,13 @@ describe('Account Routes', () => {
 
     it('should not deactivate an account that already deactived', (done) => {
       request(app)
-        .patch(`${URL}/accounts/${userAccountNumber}`)
+        .patch(`${URL}/accounts/${dormantAccountNumber}`)
         .set('Authorization', `Bearer ${staffToken}`)
-        .send(editStatus)
-        .expect(409)
+        .send(dormantAccount)
+        .expect(400)
         .end((err, res) => {
-          expect(res.body).to.have.property('status').eql(409);
+          expect(res.body).to.have.property('status').eql(400);
           expect(res.body).to.have.property('error').to.eql('Account is already dormant');
-          expect(res.status).to.equal(409);
           if (err) return done(err);
           done();
         });
@@ -412,10 +430,24 @@ describe('Account Routes', () => {
   });
 
   describe('Delete Account', () => {
-    it('should allow an admin or staff to delete an account', (done) => {
+    let clientAccountNumber;
+
+    before((done) => {
       request(app)
-        .delete(`${URL}/accounts/${deleteAccountNumber}`)
-        .set('Authorization', `Bearer ${staffToken}`)
+        .post(`${URL}/accounts`)
+        .send(newAccount)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .end((err, res) => {
+          const { accountNumber } = res.body.data;
+          clientAccountNumber = accountNumber;
+          if (err) return done(err);
+          done();
+        });
+    });
+    it('should allow an admin to delete an account', (done) => {
+      request(app)
+        .delete(`${URL}/accounts/${clientAccountNumber}`)
+        .set('Authorization', `Bearer ${adminToken}`)
         .expect(200)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(200);
@@ -444,7 +476,7 @@ describe('Account Routes', () => {
     it('should not delete a non-existing account', (done) => {
       request(app)
         .delete(`${URL}/accounts/${nonExistingAccountNumber}`)
-        .set('Authorization', `Bearer ${staffToken}`)
+        .set('Authorization', `Bearer ${adminToken}`)
         .expect(400)
         .end((err, res) => {
           expect(res.body).to.have.property('status').eql(400);

@@ -1,8 +1,10 @@
-import dummyData from '../dummyDb/db';
-import Account from '../models/Account.model';
+import Model from '../db/index';
 import isEmpty from '../helpers/isEmpty';
+import generateNumber from '../helpers/generateNumbers';
+import formatAmount from '../helpers/formatAmount';
 
-const { accounts } = dummyData;
+
+const accounts = new Model('accounts');
 
 
 /**
@@ -17,33 +19,35 @@ export default class AccountController {
    *
    * @returns {object} status code and data message
    */
-  static createAccount(req, res) {
+  static async createAccount(req, res) {
     const { type } = req.body;
     const {
-      id: userId, firstName, lastName, email
+      id: userId, firstName, lastName, email, role,
     } = req.decoded;
 
-    const {
-      id, accountNumber, owner, balance, status
-    } = new Account({ userId, type });
+    if (role === 'client') {
+      const accountNumber = await generateNumber();
+      const [newAccount] = await accounts.create(['account_number', 'owner_id', 'owner_name', 'owner_email', 'type', 'status', 'balance'],
+        [`'${accountNumber}','${userId}','${firstName} ${lastName}','${email}','${type}','dormant',0.0`]);
 
-    const data = {
-      id,
-      accountNumber,
-      firstName,
-      lastName,
-      owner,
-      email,
-      type,
-      status,
-      openingBalance: balance
-    };
 
-    return res.status(201).json({
-      status: 201,
-      data,
-      message: 'Account created'
-    });
+      const data = {
+        id: newAccount.id,
+        ownerId: newAccount.ownerId,
+        accountNumber: newAccount.accountNumber,
+        ownerName: newAccount.ownerName,
+        ownerEmail: newAccount.ownerEmail,
+        type: newAccount.type,
+        status: newAccount.status,
+        balance: formatAmount(newAccount.balance)
+
+      };
+      return res.status(201).json({
+        status: 201,
+        data,
+        message: 'Account created'
+      });
+    }
   }
 
   /**
@@ -54,7 +58,7 @@ export default class AccountController {
  *
  * @returns {object} status code and data message
  */
-  static getAccount(req, res) {
+  static async getAccount(req, res) {
     const { accountNumber } = req.params;
     const {
       id: userId, role
@@ -62,31 +66,30 @@ export default class AccountController {
     let retriveAccount;
 
     if (role === 'client') {
-      retriveAccount = accounts
-        .find(account => (
-          account.accountNumber === parseInt(accountNumber, 10)
-          && userId === account.owner
-        ));
+      [retriveAccount] = await accounts.select(['*'],
+        [`account_number=${parseInt(accountNumber, 10)}
+         AND owner_id=${userId}`]);
     } else {
       // staff or admin can get any account
-      retriveAccount = accounts
-        .find(account => account.accountNumber === parseInt(accountNumber, 10));
+      [retriveAccount] = await accounts.select(['*'],
+        [`account_number=${parseInt(accountNumber, 10)}`]);
     }
 
 
-    if (isEmpty(retriveAccount)) {
+    if (!retriveAccount) {
       return res.status(404).json({
         status: 404,
-        error: 'Account does not exist'
+        error: 'Account does not exists'
       });
     }
 
     const {
-      id, balance, owner, status, type, accountNumber: userAccountNumber
+      id, balance, ownerId, status, type, accountNumber: userAccountNumber
     } = retriveAccount;
 
+
     const data = {
-      id, accountNumber: userAccountNumber, owner, type, status, balance
+      id, accountNumber: userAccountNumber, ownerId, type, status, balance
     };
 
     return res.status(200).json({
@@ -103,18 +106,27 @@ export default class AccountController {
    *
    * @returns {object} status code and data message
    */
-  static getAllAccounts(req, res) {
+  static async getAllAccounts(req, res) {
+    const { status } = req.query;
     const { role, id: userId } = req.decoded;
 
     if (role === 'staff') {
+      if (isEmpty(req.query)) {
+        const allAccounts = await accounts.selectAll(['*']);
+        return res.status(200).json({
+          status: 200,
+          data: allAccounts
+        });
+      }
+
+      const activeAccounts = await accounts.select(['*'], [`status='${status}'`]);
       return res.status(200).json({
         status: 200,
-        data: accounts
+        data: activeAccounts
       });
     }
 
-    const userAccounts = accounts.filter(account => account.owner === userId);
-
+    const userAccounts = await accounts.select(['*'], [`owner_id='${userId}'`]);
     return res.status(200).json({
       status: 200,
       data: userAccounts
@@ -129,12 +141,18 @@ export default class AccountController {
    *
    * @return {object} returns status error and message properties
    */
-  static editAccount(req, res) {
+  static async editAccount(req, res) {
     const { accountNumber } = req.params;
     const { status } = req.body;
-
-    const accountToEdit = accounts
-      .find(account => account.accountNumber === parseInt(accountNumber, 10));
+    const { role } = req.decoded;
+    if (role === 'client') {
+      return res.status(401).json({
+        status: 401,
+        error: 'You are not authorized to perform this action'
+      });
+    }
+    const [accountToEdit] = await accounts.select(['*'],
+      [`account_number=${parseInt(accountNumber, 10)}`]);
 
     if (!accountToEdit) {
       return res.status(404).json({
@@ -145,18 +163,18 @@ export default class AccountController {
 
     const { status: checkStatus, accountNumber: userAccountNumber } = accountToEdit;
     if (checkStatus === status) {
-      return res.status(409).json({
-        status: 409,
+      return res.status(400).json({
+        status: 400,
         error: `Account is already ${status}`
       });
     }
 
-    accountToEdit.status = status;
+    const [accountUpdated] = await accounts.update([`status='${status}'`], [`account_number='${parseInt(userAccountNumber, 10)}'`]);
 
     const data = {
-      accountNumber: userAccountNumber,
-      owner: accountToEdit.owner,
-      status: accountToEdit.status
+      accountNumber: accountUpdated.accountNumber,
+      ownerId: accountUpdated.owner_id,
+      status: accountUpdated.status
     };
 
     return res.status(200).json({
@@ -166,6 +184,7 @@ export default class AccountController {
     });
   }
 
+
   /**
    *@method deleteAccount
    *
@@ -174,19 +193,21 @@ export default class AccountController {
    *
    * @return {object} returns status error and message properties
    */
-  static deleteAccount(req, res) {
+  static async deleteAccount(req, res) {
     const { accountNumber } = req.params;
-    const accountToDelete = accounts
-      .findIndex(account => account.accountNumber === parseInt(accountNumber, 10));
+    const [accountToDelete] = await accounts.select(['*'],
+      [`account_number=${parseInt(accountNumber, 10)}`]);
 
-    if (accountToDelete === -1) {
+    if (!accountToDelete) {
       return res.status(400).json({
         status: 400,
         error: 'Account does not exist'
       });
     }
 
-    accounts.splice(accountToDelete, 1);
+
+    await accounts.delete([`account_number='${accountToDelete.accountNumber}'`]);
+
 
     return res.status(200).json({
       status: 200,
