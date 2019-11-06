@@ -124,7 +124,7 @@ describe('Transaction Route', () => {
     });
   });
 
-  describe('Debit Transaction', () => {
+  describe('Debit Transaction Route', () => {
     it('should let a cashier debit an active account', (done) => {
       request(app)
         .post(`${URL}/transactions/${activeAccountNumber}/debit`)
@@ -321,6 +321,34 @@ describe('Transaction Route', () => {
           expect(res.status).to.equal(400);
           expect(res.body).to.have.property('status').eql(400);
           expect(res.body).to.have.property('error').to.eql('Transaction ID can only contain digits');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('GET All Transactions Route', () => {
+    it('should get all transactions for authorized users', (done) => {
+      request(app)
+        .get(`${URL}/transactions`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(200);
+          expect(res.status).to.equal(200);
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should get all transactions owned by an authorized user', (done) => {
+      request(app)
+        .get(`${URL}/accounts`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.body).to.have.property('status').eql(200);
+          expect(res.status).to.equal(200);
           if (err) return done(err);
           done();
         });

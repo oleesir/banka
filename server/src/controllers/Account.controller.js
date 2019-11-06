@@ -26,8 +26,22 @@ export default class AccountController {
     } = req.decoded;
 
     const accountNumber = await generateNumber();
-    const [newAccount] = await accounts.create(['account_number', 'owner_id', 'owner_name', 'owner_email', 'type', 'status', 'balance'],
-      [`'${accountNumber}','${userId}','${firstName} ${lastName}','${email}','${type}','dormant',0.0`]);
+    const [newAccount] = await accounts.create(
+      ['account_number',
+        'owner_id',
+        'owner_name',
+        'owner_email',
+        'type',
+        'status',
+        'balance'],
+      [`'${accountNumber}',
+      '${userId}',
+      '${firstName} ${lastName}',
+      '${email}',
+      '${type}',
+      'dormant',
+      0.0`]
+    );
 
 
     const data = {
@@ -142,13 +156,7 @@ export default class AccountController {
   static async editAccount(req, res) {
     const { accountNumber } = req.params;
     const { status } = req.body;
-    const { role } = req.decoded;
-    if (role === 'client') {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not authorized to perform this action'
-      });
-    }
+
     const [accountToEdit] = await accounts.select(['*'],
       [`account_number=${parseInt(accountNumber, 10)}`]);
 

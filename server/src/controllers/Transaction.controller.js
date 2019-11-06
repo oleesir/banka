@@ -21,15 +21,8 @@ export default class TransactionController {
     const { amount } = req.body;
 
     const {
-      role, id: cashierId, firstName, lastName,
+      id: cashierId, firstName, lastName,
     } = req.decoded;
-
-    if (role === 'client') {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not authorized to perform this action'
-      });
-    }
 
     const [accountToCredit] = await accounts.select(
       ['*'],
@@ -220,6 +213,36 @@ export default class TransactionController {
       status: 200,
       data,
       message: `${newTransaction.amount} was debited from your account`
+    });
+  }
+
+  /**
+   * @method getAllTransaction
+   *
+   * @param {object} req
+   * @param {object} res
+   *
+   * @returns {object} status code, data and message properties
+   */
+  static async getAllTransaction(req, res) {
+    const { id: userId, role } = req.decoded;
+
+    if (role === 'client') {
+      const retriveTransactions = await transactions.select(['*'], [`owner_id='${userId}'`]);
+
+
+      return res.status(200).json({
+        status: 200,
+        data: retriveTransactions
+      });
+    }
+
+    const allTransactions = await transactions.selectAll(['*']);
+
+
+    return res.status(200).json({
+      status: 200,
+      allTransactions
     });
   }
 
