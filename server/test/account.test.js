@@ -85,11 +85,10 @@ describe('Account Routes', () => {
         .post(`${URL}/accounts`)
         .send(newAccountTwo)
         .set('Authorization', `Bearer ${staffToken}`)
-        .expect(401)
+        .expect(403)
         .end((err, res) => {
-          expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
-          expect(res.status).to.equal(401);
+          expect(res.body).to.have.property('status').eql(403);
+          expect(res.body).to.have.property('error').to.eql('You don\'t  have the permission to perform this action');
           if (err) return done(err);
           done();
         });
@@ -323,11 +322,10 @@ describe('Account Routes', () => {
         .patch(`${URL}/accounts/${userAccountNumber}`)
         .set('Authorization', `Bearer ${clientToken}`)
         .send(editStatus)
-        .expect(401)
+        .expect(403)
         .end((err, res) => {
-          expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
-          expect(res.status).to.equal(401);
+          expect(res.body).to.have.property('status').eql(403);
+          expect(res.body).to.have.property('error').to.eql('You don\'t  have the permission to perform this action');
           if (err) return done(err);
           done();
         });
@@ -462,11 +460,10 @@ describe('Account Routes', () => {
       request(app)
         .delete(`${URL}/accounts/${deleteAccountNumber}`)
         .set('Authorization', `Bearer ${clientToken}`)
-        .expect(401)
+        .expect(403)
         .end((err, res) => {
-          expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
-          expect(res.status).to.equal(401);
+          expect(res.body).to.have.property('status').eql(403);
+          expect(res.body).to.have.property('error').to.eql('You don\'t  have the permission to perform this action');
           if (err) return done(err);
           done();
         });

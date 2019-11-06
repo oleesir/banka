@@ -222,4 +222,98 @@ export default class TransactionController {
       message: `${newTransaction.amount} was debited from your account`
     });
   }
+
+  /**
+   * @method getTransaction
+   *
+   * @param {object} req
+   * @param {object} res
+   *
+   * @returns {object} status code, data and message properties
+   */
+  static async getTransaction(req, res) {
+    const { transactionId } = req.params;
+    const { id: userId, role } = req.decoded;
+
+    let retriveTransaction;
+
+    if (role === 'client') {
+      [retriveTransaction] = await transactions.select(['*'], `id=${transactionId} AND owner_id=${userId}`);
+
+      if (!retriveTransaction) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Transaction can not be found'
+        });
+      }
+
+      const {
+        id,
+        type,
+        accountNumber,
+        ownerId,
+        cashierId,
+        cashierName,
+        amount,
+        oldBalance,
+        newBalance
+      } = retriveTransaction;
+
+      const data = {
+        id,
+        type,
+        accountNumber,
+        ownerId,
+        cashierId,
+        cashierName,
+        amount: formatAmount(amount),
+        oldBalance: formatAmount(oldBalance),
+        newBalance: formatAmount(newBalance)
+      };
+
+      return res.status(200).json({
+        status: 200,
+        data
+      });
+    }
+
+    [retriveTransaction] = await transactions.select(['*'], `id=${transactionId}`);
+
+    if (!retriveTransaction) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Transaction can not be found'
+      });
+    }
+
+
+    const {
+      id,
+      type,
+      accountNumber,
+      ownerId,
+      cashierId,
+      cashierName,
+      amount,
+      oldBalance,
+      newBalance
+    } = retriveTransaction;
+
+    const data = {
+      id,
+      type,
+      accountNumber,
+      ownerId,
+      cashierId,
+      cashierName,
+      amount: formatAmount(amount),
+      oldBalance: formatAmount(oldBalance),
+      newBalance: formatAmount(newBalance)
+    };
+
+    return res.status(200).json({
+      status: 200,
+      data
+    });
+  }
 }

@@ -7,9 +7,17 @@ import asyncErrorHandler from '../middlewares/asyncErrorHandler';
 
 const router = Router();
 
-const { creditTransaction, debitTransaction } = TransactionController;
+const {
+  creditTransaction,
+  debitTransaction,
+  getTransaction
+} = TransactionController;
 const { checkToken, authorizeRole } = Authorization;
-const { validateCreditTransaction, validateDebitTransaction } = TransactionValidation;
+const {
+  validateCreditTransaction,
+  validateDebitTransaction,
+  validateGetTransaction
+} = TransactionValidation;
 const { validateGetAccount } = AccountValidation;
 
 router
@@ -24,10 +32,18 @@ router
   .post(
     '/:accountNumber/debit',
     checkToken,
-    authorizeRole('staff'),
+    authorizeRole(['staff', 'admin']),
     validateGetAccount,
     validateDebitTransaction,
     asyncErrorHandler(debitTransaction)
+  );
+
+router
+  .get(
+    '/:transactionId',
+    checkToken,
+    validateGetTransaction,
+    asyncErrorHandler(getTransaction)
   );
 
 export default router;

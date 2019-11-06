@@ -71,4 +71,26 @@ export default class TransactionValidation {
     }
     return next();
   }
+
+  /**
+   * @method validateGetTransaction
+   *
+   * @param {Object} req
+   * @param {Object} res
+   * @param {Function} next
+   *
+   * @returns {Object} status code and error message properties
+   */
+  static validateGetTransaction(req, res, next) {
+    const { transactionId } = req.params;
+    const isNum = /^\d+$/; // gotten from Scott Evernden on Stack Overflow
+    if (!isNum.test(transactionId)) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Transaction ID can only contain digits'
+      });
+    }
+
+    return next();
+  }
 }

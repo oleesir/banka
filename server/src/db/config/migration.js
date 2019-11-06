@@ -2,6 +2,7 @@ export const dropTables = `
     DROP TABLE IF EXISTS users CASCADE;
     DROP TABLE IF EXISTS accounts CASCADE;
     DROP TABLE IF EXISTS transactions CASCADE;
+    DROP TABLE IF EXISTS roles CASCADE;
 `;
 
 export const dropTypes = `
@@ -50,7 +51,14 @@ export const createTables = `
         FOREIGN KEY(owner_id) REFERENCES users(id) ON DELETE SET NULL,
         FOREIGN KEY(cashier_id) REFERENCES users(id) ON DELETE SET NULL,
         created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);    
+        updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);  
+        
+    CREATE TABLE IF NOT EXISTS roles(
+        id SERIAL PRIMARY KEY,
+        user_role VARCHAR NOT NULL,
+        user_group TEXT [],
+        created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);
 `;
 export default {
   dropTables, createTypes, createTables, dropTypes

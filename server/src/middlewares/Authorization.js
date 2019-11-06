@@ -39,18 +39,18 @@ export default class Authorization {
   /**
    * @method authorizeRole
    *
-   * @param {string} role
+   * @param {array} roles
    *
    * @returns {function} middleware to authorize role
    */
-  static authorizeRole(role) {
-    return (req, res, next) => {
+  static authorizeRole(roles) {
+    return async (req, res, next) => {
       const { role: userRole } = req.decoded;
 
-      if (role !== userRole) {
-        return res.status(401).json({
-          status: 401,
-          error: 'You are not authorized to perform this action'
+      if (!roles.includes(userRole)) {
+        return res.status(403).json({
+          status: 403,
+          error: 'You don\'t  have the permission to perform this action'
         });
       }
 
