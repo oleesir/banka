@@ -19,6 +19,10 @@ const dormantTransaction = 9870654673;
 const dormantAccountNumber = 8888888888;
 const deleteAccountNumber = 1234352387;
 const activeAccountNumber = 1234567890;
+const transactionId = 1;
+const wrongTransactionId = 2;
+const nonExistingTransactionId = 500;
+const notFormattedTransactionId = '1u4';
 
 const newUserTwo = {
   firstName: 'james',
@@ -59,6 +63,11 @@ const clientPayloadTwo = {
   role: 'client'
 };
 
+const clientPayloadTwoo = {
+  email: 'nneka@gmail.com',
+  password: 'helloworldtwo'
+};
+
 const adminPayload = {
   id: 1,
   email: 'olisa@gmail.com',
@@ -68,8 +77,8 @@ const adminPayload = {
   role: 'admin'
 };
 
-
 const clientToken = jwt.sign(clientPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
+const clientToken2 = jwt.sign(clientPayloadTwoo, process.env.SECRET_KEY, { expiresIn: '1day' });
 const clientTokenTwo = jwt.sign(clientPayloadTwo, process.env.SECRET_KEY, { expiresIn: '1day' });
 const staffToken = jwt.sign(staffPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
 const adminToken = jwt.sign(adminPayload, process.env.SECRET_KEY, { expiresIn: '1day' });
@@ -171,14 +180,18 @@ export {
   wrongEmailAuthUser,
   newAccount,
   emptyType,
+  clientToken2,
+  wrongTransactionId,
   invalidNewAccount,
   newUserTwo,
   dormantAccountNumber,
   newAccountTwo,
   staffToken,
+  nonExistingTransactionId,
   clientToken,
   adminToken,
   expiredToken,
+  transactionId,
   fakeToken,
   userAccountNumber,
   invalidAccountNumber,

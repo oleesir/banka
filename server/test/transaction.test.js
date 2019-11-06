@@ -5,7 +5,9 @@ import app from '../src/app';
 import {
   staffToken,
   creditTransaction,
-  userAccountNumber,
+  wrongTransactionId,
+  clientToken2,
+  notFormattedTransactionId,
   dormantAccountNumber,
   emptyAmount,
   accountNumberTransaction,
@@ -15,8 +17,8 @@ import {
   nonExistingAccountNumber,
   debitTransaction,
   insufficientTransaction,
-  dormantAccount,
-  dormantTransaction,
+  transactionId,
+  nonExistingTransactionId,
   activeAccountNumber
 } from './helpers/fixtures';
 
@@ -192,11 +194,11 @@ describe('Transaction Route', () => {
         .post(`${URL}/transactions/${accountNumberTransaction}/debit`)
         .send(debitTransaction)
         .set('Authorization', `Bearer ${clientToken}`)
-        .expect(401)
+        .expect(403)
         .end((err, res) => {
-          expect(res.status).to.equal(401);
-          expect(res.body).to.have.property('status').eql(401);
-          expect(res.body).to.have.property('error').to.eql('You are not authorized to perform this action');
+          expect(res.status).to.equal(403);
+          expect(res.body).to.have.property('status').eql(403);
+          expect(res.body).to.have.property('error').to.eql('You don\'t  have the permission to perform this action');
           if (err) return done(err);
           done();
         });
@@ -245,6 +247,80 @@ describe('Transaction Route', () => {
           expect(res.status).to.equal(400);
           expect(res.body).to.have.property('status').eql(400);
           expect(res.body).to.have.property('error').to.eql('This account is not active please contact the admin');
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  describe('Get Transaction Route', () => {
+    it('should get a transaction for a client', (done) => {
+      request(app)
+        .get(`${URL}/transactions/${transactionId}`)
+        .set('Authorization', `Bearer ${clientToken2}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.data).to.have.nested.property('id');
+          expect(res.body.data).to.have.nested.property('accountNumber');
+          expect(res.body.data).to.have.nested.property('type');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should get a transaction for a staff', (done) => {
+      request(app)
+        .get(`${URL}/transactions/${transactionId}`)
+        .set('Authorization', `Bearer ${staffToken}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.data).to.have.nested.property('id');
+          expect(res.body.data).to.have.nested.property('accountNumber');
+          expect(res.body.data).to.have.nested.property('type');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should not view a transaction for another client', (done) => {
+      request(app)
+        .get(`${URL}/transactions/${wrongTransactionId}`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('status').eql(404);
+          expect(res.body).to.have.property('error').to.eql('Transaction can not be found');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should not get a transaction that does not exists', (done) => {
+      request(app)
+        .get(`${URL}/transactions/${nonExistingTransactionId}`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .expect(404)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('status').eql(404);
+          expect(res.body).to.have.property('error').to.eql('Transaction can not be found');
+          if (err) return done(err);
+          done();
+        });
+    });
+
+    it('should not get a wrongly formatted transaction id', (done) => {
+      request(app)
+        .get(`${URL}/transactions/${notFormattedTransactionId}`)
+        .set('Authorization', `Bearer ${clientToken}`)
+        .expect(400)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.have.property('status').eql(400);
+          expect(res.body).to.have.property('error').to.eql('Transaction ID can only contain digits');
           if (err) return done(err);
           done();
         });

@@ -22,32 +22,30 @@ export default class AccountController {
   static async createAccount(req, res) {
     const { type } = req.body;
     const {
-      id: userId, firstName, lastName, email, role,
+      id: userId, firstName, lastName, email
     } = req.decoded;
 
-    if (role === 'client') {
-      const accountNumber = await generateNumber();
-      const [newAccount] = await accounts.create(['account_number', 'owner_id', 'owner_name', 'owner_email', 'type', 'status', 'balance'],
-        [`'${accountNumber}','${userId}','${firstName} ${lastName}','${email}','${type}','dormant',0.0`]);
+    const accountNumber = await generateNumber();
+    const [newAccount] = await accounts.create(['account_number', 'owner_id', 'owner_name', 'owner_email', 'type', 'status', 'balance'],
+      [`'${accountNumber}','${userId}','${firstName} ${lastName}','${email}','${type}','dormant',0.0`]);
 
 
-      const data = {
-        id: newAccount.id,
-        ownerId: newAccount.ownerId,
-        accountNumber: newAccount.accountNumber,
-        ownerName: newAccount.ownerName,
-        ownerEmail: newAccount.ownerEmail,
-        type: newAccount.type,
-        status: newAccount.status,
-        balance: formatAmount(newAccount.balance)
+    const data = {
+      id: newAccount.id,
+      ownerId: newAccount.ownerId,
+      accountNumber: newAccount.accountNumber,
+      ownerName: newAccount.ownerName,
+      ownerEmail: newAccount.ownerEmail,
+      type: newAccount.type,
+      status: newAccount.status,
+      balance: formatAmount(newAccount.balance)
 
-      };
-      return res.status(201).json({
-        status: 201,
-        data,
-        message: 'Account created'
-      });
-    }
+    };
+    return res.status(201).json({
+      status: 201,
+      data,
+      message: 'Account created'
+    });
   }
 
   /**
@@ -110,15 +108,14 @@ export default class AccountController {
     const { status } = req.query;
     const { role, id: userId } = req.decoded;
 
-    if (role === 'staff') {
+    if (role === 'admin' || role === 'staff') {
       if (isEmpty(req.query)) {
         const allAccounts = await accounts.selectAll(['*']);
         return res.status(200).json({
           status: 200,
-          data: allAccounts
+          allAccounts
         });
       }
-
       const activeAccounts = await accounts.select(['*'], [`status='${status}'`]);
       return res.status(200).json({
         status: 200,
@@ -132,6 +129,7 @@ export default class AccountController {
       data: userAccounts
     });
   }
+
 
   /**
    * @method editAccount
