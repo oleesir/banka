@@ -10,20 +10,25 @@ const router = Router();
 const {
   creditTransaction,
   debitTransaction,
-  getTransaction
+  getTransaction,
+  getAllTransaction
 } = TransactionController;
+
 const { checkToken, authorizeRole } = Authorization;
+
 const {
   validateCreditTransaction,
   validateDebitTransaction,
   validateGetTransaction
 } = TransactionValidation;
+
 const { validateGetAccount } = AccountValidation;
 
 router
   . post(
     '/:accountNumber/credit',
     checkToken,
+    authorizeRole(['staff', 'admin']),
     validateGetAccount,
     validateCreditTransaction,
     asyncErrorHandler(creditTransaction)
@@ -44,6 +49,13 @@ router
     checkToken,
     validateGetTransaction,
     asyncErrorHandler(getTransaction)
+  );
+
+router
+  .get(
+    '/',
+    checkToken,
+    asyncErrorHandler(getAllTransaction)
   );
 
 export default router;
