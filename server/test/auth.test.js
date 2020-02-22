@@ -35,6 +35,7 @@ describe('Auth Routes', () => {
         .send(emptyUser)
         .expect(400)
         .end((err, res) => {
+          console.log('HELLO BRO', res.body);
           expect(res.body).to.have.property('status').equal(400);
           expect(res.body).to.have.property('error').equal('All fields are required');
           if (err) return done(err);

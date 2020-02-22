@@ -136,7 +136,35 @@ const invalidStatus = {
   status: 'irkfklm'
 };
 
+const newStaff = {
+  firstName: 'jack',
+  lastName: 'daniel',
+  email: 'dan@gmail.com',
+  password: 'qwertyuiop'
+};
 
+const emptyStaffField = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: ''
+};
+
+const emptyStaffFirstName = {
+  ...newStaff, firstName: ''
+};
+
+const emptyStaffLastName = {
+  ...newStaff, lastName: ''
+};
+
+const existingStaffEmail = { ...newStaff, email: 'dan@gmail.com' };
+const invalidStaffPasswordLength = { ...newStaff, password: 'jk' };
+const emptyStaffEmail = { ...newStaff, email: '' };
+const invalidStaffEmail = { ...newStaff, email: 'asdegmail.com' };
+const emptyStaffPassword = { ...newStaff, password: '' };
+const nonAlphabetsStaffFirstName = { ...newStaff, firstName: '/8465' };
+const nonAlphabetsStaffLastName = { ...newStaff, lastName: '/8465' };
 const emptyFirstName = { ...newUser, firstName: '' };
 const emptyLastName = { ...newUser, lastName: '' };
 const nonAlphabetsFirstName = { ...newUser, firstName: '/865' };
@@ -213,5 +241,16 @@ export {
   deleteAccountNumber,
   editStatus,
   emptyStatus,
-  invalidStatus
+  invalidStatus,
+  newStaff,
+  emptyStaffField,
+  emptyStaffFirstName,
+  emptyStaffLastName,
+  nonAlphabetsStaffFirstName,
+  nonAlphabetsStaffLastName,
+  emptyStaffEmail,
+  invalidStaffEmail,
+  emptyStaffPassword,
+  existingStaffEmail,
+  invalidStaffPasswordLength
 };
