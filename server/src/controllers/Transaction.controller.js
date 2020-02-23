@@ -1,9 +1,30 @@
+import nodemailer from 'nodemailer';
 import Model from '../db/index';
+import Mailer from '../helpers/mailer';
+
 import formatAmount from '../helpers/formatAmount';
 
 const transactions = new Model('transactions');
 const accounts = new Model('accounts');
-// const users = new Model('users');
+const users = new Model('users');
+
+/**
+ * create transporter method
+ */
+const transporter = nodemailer.createTransport({
+  host: 'smtp.mailtrap.io',
+  port: 2525,
+  auth: {
+    user: '26fdd55cbd69c7',
+    pass: '8ac614886118b2'
+  },
+  pool: true, // use pooled connection
+  rateLimit: true, // enable to make sure we are limiting
+  maxConnections: 5, // set limit to 1 connection only
+  maxMessages: 300 // send 3 emails per second
+});
+
+
 /**
  * @class TransactionController
  */
@@ -83,12 +104,23 @@ export default class TransactionController {
       ]
     );
 
+    const [accountOwner] = await users.select(['*'], [`id='${ownerId}'`]);
 
     // update to new balance
     const [updatedAccount] = await accounts.update([`balance =${newTransaction.newBalance}`], [
       `account_number = ${parseInt(accountNumber, 10)}`
     ]);
 
+
+    // send notification to account owner
+    const emailNotification = new Mailer(
+      newTransaction,
+      accountOwner,
+      accountNumber,
+      updatedAccount
+    );
+
+    await transporter.sendMail(emailNotification.mailOptions(), (error, info) => error || info);
 
     const data = {
       id: newTransaction.id,
@@ -193,11 +225,21 @@ export default class TransactionController {
       ]
     );
 
+    const [accountOwner] = await users.select(['*'], [`id='${ownerId}'`]);
+
     // update balance
     const [updatedAccount] = await accounts.update([`balance =${newTransaction.newBalance}`], [
       `account_number = ${parseInt(accountNumber, 10)}`
     ]);
 
+    const emailNotification = new Mailer(
+      newTransaction,
+      accountOwner,
+      accountNumber,
+      updatedAccount
+    );
+
+    await transporter.sendMail(emailNotification.mailOptions(), (error, info) => error || info);
 
     const data = {
       id: newTransaction.id,
