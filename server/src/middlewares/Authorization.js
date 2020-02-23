@@ -16,12 +16,8 @@ export default class Authorization {
   static checkToken(req, res, next) {
     const BearerToken = req.headers['x-access-token'] || req.headers.authorization;
     const token = BearerToken && BearerToken.replace('Bearer ', '');
-    if (!token) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Please provide a token'
-      });
-    }
+
+    if (!token) return res.status(401).json({ status: 401, error: 'Please provide a token' });
 
     return jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
@@ -48,12 +44,8 @@ export default class Authorization {
       const { role: userRole } = req.decoded;
 
       if (!roles.includes(userRole)) {
-        return res.status(403).json({
-          status: 403,
-          error: 'You don\'t  have the permission to perform this action'
-        });
+        return res.status(403).json({ status: 403, error: 'You don\'t  have the permission to perform this action' });
       }
-
       next();
     };
   }

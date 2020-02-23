@@ -28,16 +28,10 @@ export default class UserController {
 
     const [findStaff] = await users.select(['*'], [`email='${email}'`]);
 
-    if (findStaff) {
-      return res.status(409).json({
-        status: 409,
-        error: 'Staff already exists'
-      });
-    }
+    if (findStaff) return res.status(409).json({ status: 409, error: 'Staff already exists' });
 
     const hashedPassword = encryptPassword(password);
     const userEmail = email.toLowerCase();
-
 
     const [newStaff] = await users.create(['first_name', 'last_name', 'email', 'password', 'role'],
       [`'${firstName}','${lastName}','${userEmail}','${hashedPassword}','staff'`]);
@@ -53,15 +47,8 @@ export default class UserController {
 
     delete newStaff.password;
 
-    const data = {
-      token,
-      ...newStaff
-    };
+    const data = { token, ...newStaff };
 
-    return res.status(201).json({
-      status: 201,
-      data,
-      message: 'Staff created successfully'
-    });
+    return res.status(201).json({ status: 201, data, message: 'Staff created successfully' });
   }
 }

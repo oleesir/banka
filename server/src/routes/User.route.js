@@ -5,23 +5,14 @@ import Authorization from '../middlewares/Authorization';
 import asyncErrorHandler from '../middlewares/asyncErrorHandler';
 
 
-const {
-  validateCreateStaff
-} = UserValidation;
+const { validateCreateStaff } = UserValidation;
 
 const { checkToken, authorizeRole } = Authorization;
 
-const {
-  createStaff
-} = UserController;
+const { createStaff } = UserController;
 
 const router = Router();
 
-router.post('/',
-  checkToken,
-  authorizeRole(['admin']),
-  validateCreateStaff,
-  asyncErrorHandler(createStaff));
-
+router.post('/', checkToken, authorizeRole(['admin']), validateCreateStaff, asyncErrorHandler(createStaff));
 
 export default router;

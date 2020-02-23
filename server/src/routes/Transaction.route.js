@@ -8,54 +8,24 @@ import asyncErrorHandler from '../middlewares/asyncErrorHandler';
 const router = Router();
 
 const {
-  creditTransaction,
-  debitTransaction,
-  getTransaction,
-  getAllTransaction
+  creditTransaction, debitTransaction, getTransaction, getAllTransaction
 } = TransactionController;
 
 const { checkToken, authorizeRole } = Authorization;
 
 const {
-  validateCreditTransaction,
-  validateDebitTransaction,
+  validateCreditTransaction, validateDebitTransaction,
   validateGetTransaction
 } = TransactionValidation;
 
 const { validateGetAccount } = AccountValidation;
 
-router
-  . post(
-    '/:accountNumber/credit',
-    checkToken,
-    authorizeRole(['staff', 'admin']),
-    validateGetAccount,
-    validateCreditTransaction,
-    asyncErrorHandler(creditTransaction)
-  );
-router
-  .post(
-    '/:accountNumber/debit',
-    checkToken,
-    authorizeRole(['staff', 'admin']),
-    validateGetAccount,
-    validateDebitTransaction,
-    asyncErrorHandler(debitTransaction)
-  );
+router.post('/:accountNumber/credit', checkToken, authorizeRole(['staff', 'admin']), validateGetAccount, validateCreditTransaction, asyncErrorHandler(creditTransaction));
 
-router
-  .get(
-    '/:transactionId',
-    checkToken,
-    validateGetTransaction,
-    asyncErrorHandler(getTransaction)
-  );
+router.post('/:accountNumber/debit', checkToken, authorizeRole(['staff', 'admin']), validateGetAccount, validateDebitTransaction, asyncErrorHandler(debitTransaction));
 
-router
-  .get(
-    '/',
-    checkToken,
-    asyncErrorHandler(getAllTransaction)
-  );
+router.get('/:transactionId', checkToken, validateGetTransaction, asyncErrorHandler(getTransaction));
+
+router.get('/', checkToken, asyncErrorHandler(getAllTransaction));
 
 export default router;

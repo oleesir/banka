@@ -25,7 +25,5 @@ export default class Encryption {
    *
    * @returns {string} hashedPassword
    */
-  static comparePassword(password, hash) {
-    return bcrypt.compareSync(password, hash);
-  }
+  static comparePassword(password, hash) { return bcrypt.compareSync(password, hash); }
 }
