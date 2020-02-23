@@ -29,12 +29,7 @@ export default class AuthController {
 
     const existingUser = await users.select(['email'], [`email='${email}'`]);
 
-    if (existingUser.length) {
-      return res.status(409).json({
-        status: 409,
-        error: 'User already exists'
-      });
-    }
+    if (existingUser.length) return res.status(409).json({ status: 409, error: 'User already exists' });
 
     const hashedPassword = encryptPassword(password);
 
@@ -52,16 +47,9 @@ export default class AuthController {
 
     delete newUser.password;
 
-    const data = {
-      token,
-      ...newUser
-    };
+    const data = { token, ...newUser };
 
-    return res.status(201).json({
-      status: 201,
-      data,
-      message: 'User registered successfully'
-    });
+    return res.status(201).json({ status: 201, data, message: 'User registered successfully' });
   }
 
   /**
@@ -77,12 +65,8 @@ export default class AuthController {
 
     const [findUser] = await users.select(['*'], `email='${email}'`);
 
-    if (!findUser) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Email or password is incorrect'
-      });
-    }
+    if (!findUser) return res.status(401).json({ status: 401, error: 'Email or password is incorrect' });
+
 
     if (findUser) {
       const {
@@ -95,12 +79,8 @@ export default class AuthController {
 
       const verifyUserPassword = comparePassword(password, findUser.password);
 
-      if (!verifyUserPassword) {
-        return res.status(401).json({
-          status: 401,
-          error: 'Email or password is incorrect'
-        });
-      }
+      if (!verifyUserPassword) return res.status(401).json({ status: 401, error: 'Email or password is incorrect' });
+
 
       const payload = {
         id,
@@ -112,20 +92,10 @@ export default class AuthController {
 
       const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1day' });
 
-      const data = {
-        ...payload,
-        token
-      };
+      const data = { ...payload, token };
 
-      return res.status(200).json({
-        status: 200,
-        data,
-        message: 'Login successful'
-      });
+      return res.status(200).json({ status: 200, data, message: 'Login successful' });
     }
-    return res.status(401).json({
-      status: 401,
-      error: 'Email or password is incorrect'
-    });
+    return res.status(401).json({ status: 401, error: 'Email or password is incorrect' });
   }
 }

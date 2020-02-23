@@ -15,18 +15,11 @@ export default class AccountValidation {
    */
   static validateCreateAccount(req, res, next) {
     const { type } = req.body;
-    if (isEmpty(type)) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Account type is required'
-      });
-    }
+    if (isEmpty(type)) return res.status(400).json({ status: 400, error: 'Account type is required' });
 
     if (type !== 'savings' && type !== 'current') {
-      return res.status(400).json({
-        status: 400,
-        error: 'Account type can only be either savings or current'
-      });
+      return res.status(400)
+        .json({ status: 400, error: 'Account type can only be either savings or current' });
     }
     return next();
   }
@@ -44,21 +37,9 @@ export default class AccountValidation {
     const { accountNumber } = req.params;
     const isNum = /^\d+$/;
 
-    if (accountNumber.length !== 10) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Account number must be 10 digits'
-      });
-    }
+    if (accountNumber.length !== 10) return res.status(400).json({ status: 400, error: 'Account number must be 10 digits' });
 
-
-    if (!isNum.test(accountNumber)) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Account number can only contain digits'
-      });
-    }
-
+    if (!isNum.test(accountNumber)) { return res.status(400).json({ status: 400, error: 'Account number can only contain digits' }); }
 
     return next();
   }
@@ -77,26 +58,11 @@ export default class AccountValidation {
     const { status } = req.body;
     const isNum = /^\d+$/;
 
-    if (accountNumber.length !== 10) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Account number must be 10 digits'
-      });
-    }
+    if (accountNumber.length !== 10) return res.status(400).json({ status: 400, error: 'Account number must be 10 digits' });
 
-    if (!isNum.test(accountNumber)) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Account number can only contain digits'
-      });
-    }
+    if (!isNum.test(accountNumber)) return res.status(400).json({ status: 400, error: 'Account number can only contain digits' });
 
-    if (status !== 'dormant' && status !== 'active') {
-      return res.status(400).json({
-        status: 400,
-        error: 'Status can only be active or dormant'
-      });
-    }
+    if (status !== 'dormant' && status !== 'active') return res.status(400).json({ status: 400, error: 'Status can only be active or dormant' });
 
     return next();
   }

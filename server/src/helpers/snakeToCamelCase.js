@@ -7,9 +7,7 @@ export default function snakeToCamelCase(str) {
   const matcher = /_[a-z]{1}/;
   const [match] = str.match(matcher) || [];
 
-  if (match) {
-    return str.replace(matcher, match[1].toUpperCase());
-  }
+  if (match) return str.replace(matcher, match[1].toUpperCase());
 
   return str;
 }

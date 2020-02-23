@@ -45,17 +45,9 @@ export default class TransactionController {
       id: cashierId, firstName, lastName,
     } = req.decoded;
 
-    const [accountToCredit] = await accounts.select(
-      ['*'],
-      [`account_number=${parseInt(accountNumber, 10)}`]
-    );
+    const [accountToCredit] = await accounts.select(['*'], [`account_number=${parseInt(accountNumber, 10)}`]);
 
-    if (!accountToCredit) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Account does not exist'
-      });
-    }
+    if (!accountToCredit) return res.status(404).json({ status: 404, error: 'Account does not exist' });
 
     const {
       balance,
@@ -64,53 +56,19 @@ export default class TransactionController {
       accountNumber: userAccountNumber
     } = accountToCredit;
 
-    if (cashierId === ownerId) {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not allowed to carry out that action'
-      });
-    }
+    if (cashierId === ownerId) return res.status(401).json({ status: 401, error: 'You are not allowed to carry out that action' });
 
-    if (status === 'dormant') {
-      return res.status(400).json({
-        status: 400,
-        error:
-          'Account is dormant, please activate it to carry out a transaction'
-      });
-    }
+    if (status === 'dormant') return res.status(400).json({ status: 400, error: 'Account is dormant, please activate it to carry out a transaction' });
 
     const newBalance = formatAmount(balance) + formatAmount(amount);
 
-    const [newTransaction] = await transactions.create(
-      [
-        'type',
-        'account_number',
-        'owner_id',
-        'cashier_id',
-        'cashier_name',
-        'amount',
-        'old_balance',
-        'new_balance'
-      ],
-      [
-        `'credit',
-        ${userAccountNumber},
-        ${ownerId},
-        ${cashierId},
-        '${firstName} ${lastName}',
-        ${amount},
-        ${balance},
-        ${newBalance}`
-      ]
-    );
+    const [newTransaction] = await transactions.create(['type', 'account_number', 'owner_id', 'cashier_id', 'cashier_name', 'amount', 'old_balance', 'new_balance'],
+      [`'credit', ${userAccountNumber}, ${ownerId}, ${cashierId}, '${firstName} ${lastName}',${amount}, ${balance},${newBalance}`]);
 
     const [accountOwner] = await users.select(['*'], [`id='${ownerId}'`]);
 
     // update to new balance
-    const [updatedAccount] = await accounts.update([`balance =${newTransaction.newBalance}`], [
-      `account_number = ${parseInt(accountNumber, 10)}`
-    ]);
-
+    const [updatedAccount] = await accounts.update([`balance =${newTransaction.newBalance}`], [`account_number = ${parseInt(accountNumber, 10)}`]);
 
     // send notification to account owner
     const emailNotification = new Mailer(
@@ -133,11 +91,7 @@ export default class TransactionController {
       accountBalance: formatAmount(updatedAccount.balance)
     };
 
-    return res.status(200).json({
-      status: 200,
-      data,
-      message: `${newTransaction.amount} was credited to your account`
-    });
+    return res.status(200).json({ status: 200, data, message: `${newTransaction.amount} was credited to your account` });
   }
 
   /**
@@ -156,21 +110,11 @@ export default class TransactionController {
     } = req.decoded;
     const minimumBalance = 500;
 
-    if (role !== 'staff') {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not allowed to carry out that action'
-      });
-    }
+    if (role !== 'staff') return res.status(401).json({ status: 401, error: 'You are not allowed to carry out that action' });
 
     const [accountToDebit] = await accounts.select(['*'], `account_number=${parseInt(accountNumber, 10)}`);
 
-    if (!accountToDebit) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Account does not exist'
-      });
-    }
+    if (!accountToDebit) return res.status(404).json({ status: 404, error: 'Account does not exist' });
 
     const {
       accountNumber: userAccountNumber,
@@ -179,51 +123,19 @@ export default class TransactionController {
       ownerId
     } = accountToDebit;
 
-    if (cashierId === ownerId) {
-      return res.status(401).json({
-        status: 401,
-        error: 'You are not allowed to carry out that action'
-      });
-    }
+    if (cashierId === ownerId) return res.status(401).json({ status: 401, error: 'You are not allowed to carry out that action' });
 
-    if (status === 'dormant') {
-      return res.status(400).json({
-        status: 400,
-        error: 'This account is not active please contact the admin'
-      });
-    }
+    if (status === 'dormant') return res.status(400).json({ status: 400, error: 'This account is not active please contact the admin' });
+
     const balanceWithdrawable = balance - minimumBalance;
 
-    if (amount > balanceWithdrawable) {
-      return res.status(400).json({
-        status: 400,
-        error: 'Insufficient funds, cannot perform transaction'
-      });
-    }
+    if (amount > balanceWithdrawable) return res.status(400).json({ status: 400, error: 'Insufficient funds, cannot perform transaction' });
+
 
     const newBalance = formatAmount(balance) - formatAmount(amount);
 
-    const [newTransaction] = await transactions.create(
-      ['type',
-        'account_number',
-        'owner_id',
-        'cashier_id',
-        'cashier_name',
-        'amount',
-        'old_balance',
-        'new_balance'],
-      [
-        `'debit',
-        ${userAccountNumber},
-        ${ownerId},
-        ${cashierId},
-        '${firstName} ${lastName}',
-        ${amount},
-        ${balance},
-        ${newBalance}
-        `
-      ]
-    );
+    const [newTransaction] = await transactions.create(['type', 'account_number', 'owner_id', 'cashier_id', 'cashier_name', 'amount', 'old_balance', 'new_balance'],
+      [`'debit',${userAccountNumber},${ownerId},${cashierId},'${firstName} ${lastName}',${amount},${balance},${newBalance}`]);
 
     const [accountOwner] = await users.select(['*'], [`id='${ownerId}'`]);
 
@@ -251,11 +163,7 @@ export default class TransactionController {
       accountBalance: formatAmount(updatedAccount.balance)
     };
 
-    return res.status(200).json({
-      status: 200,
-      data,
-      message: `${newTransaction.amount} was debited from your account`
-    });
+    return res.status(200).json({ status: 200, data, message: `${newTransaction.amount} was debited from your account` });
   }
 
   /**
@@ -272,20 +180,12 @@ export default class TransactionController {
     if (role === 'client') {
       const retriveTransactions = await transactions.select(['*'], [`owner_id='${userId}'`]);
 
-
-      return res.status(200).json({
-        status: 200,
-        data: retriveTransactions
-      });
+      return res.status(200).json({ status: 200, data: retriveTransactions });
     }
 
     const allTransactions = await transactions.selectAll(['*']);
 
-
-    return res.status(200).json({
-      status: 200,
-      allTransactions
-    });
+    return res.status(200).json({ status: 200, allTransactions });
   }
 
   /**
@@ -305,12 +205,7 @@ export default class TransactionController {
     if (role === 'client') {
       [retriveTransaction] = await transactions.select(['*'], `id=${transactionId} AND owner_id=${userId}`);
 
-      if (!retriveTransaction) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Transaction can not be found'
-        });
-      }
+      if (!retriveTransaction) return res.status(404).json({ status: 404, error: 'Transaction can not be found' });
 
       const {
         id,
@@ -336,21 +231,12 @@ export default class TransactionController {
         newBalance: formatAmount(newBalance)
       };
 
-      return res.status(200).json({
-        status: 200,
-        data
-      });
+      return res.status(200).json({ status: 200, data });
     }
 
     [retriveTransaction] = await transactions.select(['*'], `id=${transactionId}`);
 
-    if (!retriveTransaction) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Transaction can not be found'
-      });
-    }
-
+    if (!retriveTransaction) return res.status(404).json({ status: 404, error: 'Transaction can not be found' });
 
     const {
       id,
@@ -376,9 +262,6 @@ export default class TransactionController {
       newBalance: formatAmount(newBalance)
     };
 
-    return res.status(200).json({
-      status: 200,
-      data
-    });
+    return res.status(200).json({ status: 200, data });
   }
 }

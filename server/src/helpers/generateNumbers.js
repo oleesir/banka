@@ -10,9 +10,8 @@ const generateNumber = async () => {
   const accountNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
   const existingNumber = await accounts.select(['account_number'], [`account_number='${accountNumber}'`]);
 
-  if (existingNumber.length > 0) {
-    return generateNumber();
-  }
+  if (existingNumber.length > 0) return generateNumber();
+
   return accountNumber;
 };
 
