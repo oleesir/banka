@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import Model from '../db/index';
 import Encryption from '../helpers/Encryption';
 
+
 dotenv.config();
 
 const users = new Model('users');
@@ -97,5 +98,23 @@ export default class AuthController {
       return res.status(200).json({ status: 200, data, message: 'Login successful' });
     }
     return res.status(401).json({ status: 401, error: 'Email or password is incorrect' });
+  }
+
+  /**
+   * @method signin
+   *
+   * @param {object} req request
+   * @param {object} res response
+   *
+   * @returns {object}  status code, data and message properties
+   */
+  static async loggedInUser(req, res) {
+    const { id } = req.decoded;
+
+    const [findUser] = await users.select(['*'], `id='${id}'`);
+
+    delete findUser.password;
+
+    return res.status(200).json({ status: 200, findUser });
   }
 }
